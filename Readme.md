@@ -1,17 +1,18 @@
 # PixLeZ - Documentation
 
 [![alt text](https://img.shields.io/github/followers/Excyto?label=Github&style=social)](https://github.com/Excyto)
-[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/Excyto)
-[![GitHub version](https://img.shields.io/badge/Open-Source-brightgreen)](https://github.com/Excyto)
+[![alt text](https://img.shields.io/github/v/release/Excyto/PixLeZ?color=g)](https://github.com/Excyto/PixLeZ)
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/Excyto/PixLeZ/blob/master/LICENSE)
+[![GitHub version](https://img.shields.io/badge/Open-Source-brightgreen)](https://github.com/Excyto/PixLeZ)
 
-[![GitHub version](https://img.shields.io/badge/Hardware-Raspberry%20Pi-brightgreen)](https://github.com/Excyto)
-[![GitHub version](https://img.shields.io/badge/Server-Python-brightgreen)](https://github.com/Excyto)
-[![GitHub version](https://img.shields.io/badge/Client-C%23%20%7C%20Flutter-brightgreen)](https://github.com/Excyto)
+[![GitHub version](https://img.shields.io/badge/Hardware-Raspberry%20Pi-brightgreen)](hhttps://github.com/Excyto/PixLeZ)
+[![GitHub version](https://img.shields.io/badge/Server-Python-brightgreen)](https://github.com/Excyto/PixLeZ)
+[![GitHub version](https://img.shields.io/badge/Client-C%23%20%7C%20Flutter-brightgreen)](https://github.com/Excyto/PixLeZ)
 
 ## Introduction
 
 PixLeZ is a Software-Bundle for controlling the [WS2801 Pixels](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) with a Raspberry Pi.  
-The Bundel contains a Server application, running on the Raspberry Pi and different clients to control the Pixels.
+The Bundle contains a Server application, running on the Raspberry Pi and different clients to control the Pixels.
 
 ## Content
 
@@ -72,7 +73,7 @@ app.run(debug=True, port=8080, host="0.0.0.0")
 
 After installing, the PixLeZ-Server provides the following API. The API is used by the applications described in the next few sections, but can also be used via a webbrowser or a third application.  
 The term `changeable during runtime` is used to describe that the attributes can be changed during the execution of an effect or mode. The change of attributes with `non changeable during runtime` will be changed after selecting a new effect or mode, or after doing an `/stop` and `/start`.
-Each time you select an effect, the mode attribute will turn to `-1` and backwards. Furthermore after selecting an effect or mode, the programm will automatically do an `/stop` and `/start`.
+Each time you select an effect, the mode attribute will turn to `-1` and backwards. Furthermore after selecting an effect or mode, the program will automatically do an `/stop` and `/start`.
 
 ```python
 # starts the process -> only call in the beginning or after a stop
@@ -201,7 +202,7 @@ Use PixLeZ-Application developed with `flutter` instead of PixLeZ_Desktop for a 
 
 The PixLeZ-Application is the main part of the project. The application provides a lot of possibilities for configuration the Pixels.
 
-The PixLeZ-Application is made with `flutter`. Flutters advantage is in running code on every paltform. For more informations check the [Flutter](https://flutter.dev/) webpage.  
+The PixLeZ-Application is made with `flutter`. Flutters advantage is in running code on every platform. For more information check the [Flutter](https://flutter.dev/) webpage.  
 
 You have two options to run the PixLeZ-Application
 
@@ -214,7 +215,7 @@ You have two options to run the PixLeZ-Application
 
 The PixLeZ-Simulator is developed for simulating, debuging and testing your program without using the hardware. It is using the same [API](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much.
 
-For more Informations please check the Simulator `Readme.md` in `./PixLeZ_Simulator/Readme.md`.
+For more Information please check the Simulator `Readme.md` in `./PixLeZ_Simulator/Readme.md`.
 
 ## About
 
