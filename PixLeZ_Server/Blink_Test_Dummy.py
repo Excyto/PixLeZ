@@ -11,7 +11,8 @@ from multiprocessing import Queue
 from threading import Thread
 
 '''
-    PixLeZ - Server
+    PixLeZ - Server Dummy
+    Used without connecting to the Hardware
     
 '''
 

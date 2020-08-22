@@ -12,7 +12,7 @@
 ## Introduction
 
 PixLeZ is a Software-Bundle for controlling the [WS2801 Pixels](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) with a Raspberry Pi.  
-The Bundle contains a Server application, running on the Raspberry Pi and different clients to control the Pixels.
+The Bundle contains a server application, running on the Raspberry Pi and different clients for control the server.
 
 ## Content
 
@@ -43,12 +43,14 @@ There is a picture of my personal setup.
 
 ### Software
 
-For the software part you have to run following commands on your Raspberry Pi to install the `python` libraries.
+For the software part you have to install some `python` libraries with the following commands.
 
 ```sh
 sudo apt-get update
 sudo apt-get install python[Version]
 sudo apt-get install python-pip -y
+sudo pip install RPi.GPIO
+sudo pip install Adafruit-GPIO
 sudo pip install adafruit-ws2801
 sudo pip install flask
 ```
@@ -71,7 +73,7 @@ app.run(debug=True, port=8080, host="0.0.0.0")
 
 ### API calls
 
-After installing, the PixLeZ-Server provides the following API. The API is used by the applications described in the next few sections, but can also be used via a webbrowser or a third application.  
+After installing, the PixLeZ-Server provides the following API. The API is used by the applications described in the next few sections, but can also be used via a webbrowser or an other application.  
 The term `changeable during runtime` is used to describe that the attributes can be changed during the execution of an effect or mode. The change of attributes with `non changeable during runtime` will be changed after selecting a new effect or mode, or after doing an `/stop` and `/start`.
 Each time you select an effect, the mode attribute will turn to `-1` and backwards. Furthermore after selecting an effect or mode, the program will automatically do an `/stop` and `/start`.
 
@@ -181,7 +183,7 @@ You are not able to select your added effects and modes with the PixLeZ-Applicat
 
 ### Example: Use the API
 
-How to start an effect and manipulate it.
+How to start an effect and manipulate it. If u use an application do the same steps but without the API calls.
 
 1. Select a color or color theme with `/set/color/<string:color>` or `/set/pixels`
 1. Select your effect with `/select/effect/1`
@@ -193,7 +195,8 @@ How to start an effect and manipulate it.
 
 > Path: `./PixLeZ_Desktop`
 
-PixLeZ-Desktop is developed for easy controlling the pixels via windows desktop. It is developed in `C#` with Visual Studio. The main use of this programm is to debug and test the application.  
+PixLeZ-Desktop is developed for easy controlling the pixels via windows desktop. It is developed in `C#` with Visual Studio. The main use of this programm is to debug and test the application.
+
 Use PixLeZ-Application developed with `flutter` instead of PixLeZ_Desktop for a better user experience.
 
 ## PixLeZ-Application
@@ -213,13 +216,21 @@ You have two options to run the PixLeZ-Application
 
 > Path: `./PixLeZ_Simulator`
 
-The PixLeZ-Simulator is developed for simulating, debuging and testing your program without using the hardware. It is using the same [API](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much.
+The PixLeZ-Simulator is developed for simulating, debuging and testing your program without using hardware. It is using the same [API](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much.
 
 For more Information please check the Simulator `Readme.md` in `./PixLeZ_Simulator/Readme.md`.
 
 ## About
 
 PixLeZ is created by Tobias Schreiweis in 2020.  
+
+It started as a private project with the main focus to improve my python skills with the Raspberry Pi and learning new programing languages like dart with the framework flutter. After some request from other peoples getting the application I decided to publish it on GitHub.
+
+You are welcome to extend the PixLeZ-Bundle or send me your ideas and I would be glad about adding your code and ideas to this repository.
+
+If I can be of assistance, please do not hesitate to contact me.
+
+[![alt text](https://img.shields.io/github/followers/Excyto?label=Github&style=social)](https://github.com/Excyto)
 
 ## Links
 

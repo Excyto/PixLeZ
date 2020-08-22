@@ -6,7 +6,7 @@ import subprocess
 import sys
 import time
 from multiprocessing import Process
-from Blink_Test import Blink
+from Blink import Blink
 
 '''
     PixLeZ - Server
@@ -91,8 +91,8 @@ def flask_set_pixels():
 # ! doc: https://flask.palletsprojects.com/en/1.1.x/api/?highlight=run#flask.Flask.run
 if __name__ == '__main__':
     # Application:
-    # app.run(debug=True, port=8080, host="0.0.0.0")
+    app.run(debug=True, port=8080, host="0.0.0.0")
 
     # Debug:
-    app.run(debug=True, port=5500)
+    # app.run(debug=True, port=5500)
 
