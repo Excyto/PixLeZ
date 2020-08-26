@@ -46,7 +46,8 @@ class Blink(object):
         self.queueColorList = Queue()
         self.queueTime = Queue()
         self.queueNumber = Queue()
-        self.process = Process(target=self.run, args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
+        self.process = Process(target=self.run,
+                               args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
 
     # * -----------
     # * Basic control and status methods
@@ -61,17 +62,17 @@ class Blink(object):
             self.process.terminate()
             pixels.clear()
             pixels.show()
-            self.process = self.process = Process(target=self.run, args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber, ))
+            self.process = self.process = Process(target=self.run, args=(
+                self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
 
     def get_status(self):
         col1 = self.color_to_RGB(self.color)
         col2 = self.RGB_to_hex(col1[0], col1[1], col1[2])
         retStr = "color=" + str(col2) + ";\ntime=" + str(self.time) + ";\ntimer=" + str(self.timer) \
-                    + ";\nnumber=" + str(self.number) + ";\nmode=" + str(self.mode) + ";\neffect=" + str(self.effect) \
-                    + ";\nprocess=" + str(self.process.is_alive())
+                 + ";\nnumber=" + str(self.number) + ";\nmode=" + str(self.mode) + ";\neffect=" + str(self.effect) \
+                 + ";\nprocess=" + str(self.process.is_alive())
         return retStr
 
-    
     # * -----------
     # * Converts the RGB in different color schemes
     # * -----------
@@ -219,12 +220,9 @@ class Blink(object):
         t.setDaemon(True)
         t.start()
         while True:
-            
-            
 
             time.sleep(0.001)
 
-            
             # * -----------
             # * Effects
             # * -----------
@@ -235,7 +233,6 @@ class Blink(object):
                 for i in range(len(self.colorList)):
                     pixels.set_pixel(i, int(self.colorList[i], 16))
                 pixels.show()
-
 
             # 1) Effect - Walking Pixels
             if self.effect == 1:
@@ -263,12 +260,12 @@ class Blink(object):
                         pixels.set_pixel(j, int(self.colorList[j], 16))
                         pixels.show()
                         time.sleep(self.time)
-            # 3) Effect - Fill number Pixels
+            # 3) Effect - Fill number Pixels (even distribution)
             if self.effect == 3:
-                for i in range(self.number):
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                for i in range(self.number, pixels.count()):
-                    pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(0, 0, 0))
+                pixels.clear()
+                step = pixels.count() / self.number
+                for i in range(0, self.number):
+                    pixels.set_pixel(min(int(i * step), pixels.count() - 1), self.color)
                 pixels.show()
             # 4) Effect - Get empty Pixels
             if self.effect == 4:
@@ -399,9 +396,9 @@ class Blink(object):
                 pixels.set_pixels(0)
                 for i in range(pixels.count()):
                     pixels.set_pixel(random.randint(0, pixels.count() - 1),
-                                        Adafruit_WS2801.RGB_to_color(random.randint(0, 255),
-                                                                     random.randint(0, 255),
-                                                                     random.randint(0, 255)))
+                                     Adafruit_WS2801.RGB_to_color(random.randint(0, 255),
+                                                                  random.randint(0, 255),
+                                                                  random.randint(0, 255)))
                     pixels.show()
                     time.sleep(self.time)
             # TODO: Pixel n outside the count of pixels erl?
@@ -460,8 +457,10 @@ class Blink(object):
                     pixels.set_pixel(i + self.number + 1, int(self.colorList[i + self.number + 1], 16))
                     pixels.set_pixel(pixels.count() - i - 1, int(self.colorList[pixels.count() - i - 1], 16))
                     for j in range(self.number + 1):
-                        pixels.set_pixel(pixels.count() - i - j - 1, int(self.colorList[pixels.count() - i - j - 1], 16))
-                    pixels.set_pixel(pixels.count() - i - self.number - 1, int(self.colorList[pixels.count() - i - self.number - 1], 16))
+                        pixels.set_pixel(pixels.count() - i - j - 1,
+                                         int(self.colorList[pixels.count() - i - j - 1], 16))
+                    pixels.set_pixel(pixels.count() - i - self.number - 1,
+                                     int(self.colorList[pixels.count() - i - self.number - 1], 16))
 
                     pixels.show()
                     time.sleep(self.time)
@@ -475,8 +474,10 @@ class Blink(object):
                     pixels.set_pixel(i + self.number + 1, int(self.colorList[i + self.number + 1], 16))
                     pixels.set_pixel(pixels.count() - i - 1, int(self.colorList[pixels.count() - i - 1], 16))
                     for j in range(self.number + 1):
-                        pixels.set_pixel(pixels.count() - i - j - 1, int(self.colorList[pixels.count() - i - j - 1], 16))
-                    pixels.set_pixel(pixels.count() - i - self.number - 1, int(self.colorList[pixels.count() - i - self.number - 1], 16))
+                        pixels.set_pixel(pixels.count() - i - j - 1,
+                                         int(self.colorList[pixels.count() - i - j - 1], 16))
+                    pixels.set_pixel(pixels.count() - i - self.number - 1,
+                                     int(self.colorList[pixels.count() - i - self.number - 1], 16))
 
                     pixels.show()
                     time.sleep(self.time)
@@ -506,7 +507,6 @@ class Blink(object):
                             pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(255, 255, 255))
                     pixels.show()
 
-
                 cooldownTmp = 0
                 # fast flames cool down 55
                 cooling = 20
@@ -523,7 +523,7 @@ class Blink(object):
                         heat[i] = heat[i] - cooldownTmp
 
                 for k in reversed(range(2, pixels.count() - 1)):
-                    heat[k] = (heat[k-1] + heat[k-2] + heat[k-2]) / 3
+                    heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3
 
                 if random.randint(0, 255) < sparking:
                     y = random.randint(0, 7)
@@ -566,7 +566,7 @@ class Blink(object):
                                 b = b - int((b * meteorTrailDecay / 256))
                             pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(r, g, b))
                     for j in range(self.number):
-                        if (i-j < pixels.count()) and (i-j >= 0):
+                        if (i - j < pixels.count()) and (i - j >= 0):
                             pixels.set_pixel(i - j, self.color)
                 pixels.show()
                 time.sleep(self.time)
@@ -594,4 +594,3 @@ class Blink(object):
             # self.value = self.value + 1
             # print(self.value)
             # time.sleep(self.time)
-
