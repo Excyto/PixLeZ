@@ -13,9 +13,9 @@ import Adafruit_GPIO.SPI as SPI
 
 # ! Select your pixel count
 # 5 * 32 = 160 LEDs
-from Blink import Blink
 
 # TODO, dont define this twice!
+import Blink
 
 PIXEL_COUNT = 160
 
