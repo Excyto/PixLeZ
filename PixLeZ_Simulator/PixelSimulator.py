@@ -10,6 +10,7 @@ from PixelSimulatorConfig import *
     
 '''
 
+
 class PixelSimulator(object):
     def __init__(self):
         self.__ledMax = 160
@@ -43,7 +44,7 @@ class PixelSimulator(object):
         self.__buttonStepShow = Button(text="Step show", master=self.__frameMenu)
         self.__buttonStepShow.bind("<Button-1>", self.__do_show)
         self.__buttonStepShow.pack(side=LEFT, padx=2)
-        self.__checkboxShow = Checkbutton(text="Step show", variable = self.__step_show_activ, master=self.__frameMenu)
+        self.__checkboxShow = Checkbutton(text="Step show", variable=self.__step_show_activ, master=self.__frameMenu)
         self.__checkboxShow.pack(side=LEFT, padx=2)
 
         self.__labelLedMax = Label(text="MAXLed:", master=self.__frameMenu)
@@ -90,7 +91,8 @@ class PixelSimulator(object):
             color = "FFFFFF"
             for i in range(self.__xMax):
                 if self.__count < self.__ledMax:
-                    label01 = Label(text=self.__count, foreground="black", background=str("#" + color), height=2, width=3,
+                    label01 = Label(text=self.__count, foreground="black", background=str("#" + color), height=2,
+                                    width=3,
                                     master=framePixels)
                     label01.pack(fill=BOTH, side=LEFT, expand=True, padx=2, pady=5)
                     self.__arr.append(label01)
