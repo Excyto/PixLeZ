@@ -248,7 +248,7 @@ def theaterChase(colorList: List[str], timespan: float):
 # TODO: Pixel n outside the count of pixels
 def centerBounce(colorList: List[str], number: int, timespan: float):
     # outside to center
-    for i in range((pixels.count() - number) / 2):
+    for i in range(int((pixels.count() - number) / 2), 16):
         pixels.set_pixels(0)
         pixels.set_pixel(i, int(colorList[i], 16))
         for j in range(1, number):
