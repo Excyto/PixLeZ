@@ -14,6 +14,8 @@ from multiprocessing import Process
 from multiprocessing import Queue
 from threading import Thread
 
+from effects import Effects
+
 '''
     PixLeZ - Server
     
@@ -46,7 +48,8 @@ class Blink(object):
         self.queueColorList = Queue()
         self.queueTime = Queue()
         self.queueNumber = Queue()
-        self.process = Process(target=self.run, args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
+        self.process = Process(target=self.run,
+                               args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
 
     # * -----------
     # * Basic control and status methods
@@ -61,17 +64,17 @@ class Blink(object):
             self.process.terminate()
             pixels.clear()
             pixels.show()
-            self.process = self.process = Process(target=self.run, args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber, ))
+            self.process = self.process = Process(target=self.run, args=(
+            self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
 
     def get_status(self):
         col1 = self.color_to_RGB(self.color)
         col2 = self.RGB_to_hex(col1[0], col1[1], col1[2])
         retStr = "color=" + str(col2) + ";\ntime=" + str(self.time) + ";\ntimer=" + str(self.timer) \
-                    + ";\nnumber=" + str(self.number) + ";\nmode=" + str(self.mode) + ";\neffect=" + str(self.effect) \
-                    + ";\nprocess=" + str(self.process.is_alive())
+                 + ";\nnumber=" + str(self.number) + ";\nmode=" + str(self.mode) + ";\neffect=" + str(self.effect) \
+                 + ";\nprocess=" + str(self.process.is_alive())
         return retStr
 
-    
     # * -----------
     # * Converts the RGB in different color schemes
     # * -----------
@@ -219,357 +222,97 @@ class Blink(object):
         t.setDaemon(True)
         t.start()
         while True:
-            
-            
 
             time.sleep(0.001)
 
-            
             # * -----------
             # * Effects
             # * -----------
 
             # 0) led_on
             if self.effect == 0:
-                # pixels.set_pixels(self.color)
-                for i in range(len(self.colorList)):
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                pixels.show()
-
+                Effects.showAll(self.colorList)
 
             # 1) Effect - Walking Pixels
             if self.effect == 1:
-                pixels.clear()
-                pixels.show()
-                for i in range(pixels.count()):
-                    for j in reversed(range(i, pixels.count())):
-                        pixels.clear()
-                        for k in range(i):
-                            pixels.set_pixel(k, int(self.colorList[k], 16))
-                            time.sleep(self.time)
-                        pixels.set_pixel(j, int(self.colorList[j], 16))
-                        pixels.show()
-                        time.sleep(self.time)
+                Effects.walkingPixels(self.colorList, self.time, False)
+
             # 2) Effect - Walking Pixels reverse
             if self.effect == 2:
-                pixels.clear()
-                pixels.show()
-                for i in range(pixels.count()):
-                    for j in range(i, pixels.count()):
-                        pixels.clear()
-                        for k in range(i):
-                            pixels.set_pixel(k, int(self.colorList[k], 16))
-                            time.sleep(self.time)
-                        pixels.set_pixel(j, int(self.colorList[j], 16))
-                        pixels.show()
-                        time.sleep(self.time)
+                Effects.walkingPixels(self.colorList, self.time, True)
+
             # 3) Effect - Fill number Pixels
             if self.effect == 3:
-                for i in range(self.number):
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                for i in range(self.number, pixels.count()):
-                    pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(0, 0, 0))
-                pixels.show()
+                Effects.fillNPixels(self.colorList, self.number)
+
             # 4) Effect - Get empty Pixels
             if self.effect == 4:
-                for i in range(len(self.colorList)):
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                pixels.show()
-                tmpTimer = self.timer / pixels.count()
-                for i in range(pixels.count()):
-                    pixels.set_pixel(i, 0)
-                    pixels.show()
-                    time.sleep(tmpTimer)
+                Effects.emptyPixels(self.colorList, self.timer)
+
             # 5) Effect - Countdown Pixels
             if self.effect == 5:
-                pixels.clear()
-                pixels.show()
-                tmpTimer = self.timer / pixels.count()
-                for i in range(pixels.count()):
-                    pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(255, 0, 0))
-                    pixels.show()
-                    time.sleep(tmpTimer)
-                for i in range(5):
-                    pixels.set_pixels(Adafruit_WS2801.RGB_to_color(0, 0, 0))
-                    pixels.show()
-                    time.sleep(1)
-                    pixels.set_pixels(Adafruit_WS2801.RGB_to_color(255, 0, 0))
-                    pixels.show()
-                    time.sleep(1)
-                break
+                Effects.countdown(self.timer)
+
             # 6) Effect - Pulsing Pixels
             if self.effect == 6:
-                stateTmp = 0;
-                tupelTmp = Adafruit_WS2801.color_to_RGB(self.color)
-                while True:
-                    if stateTmp == 0:
-                        if tupelTmp[0] < 10 or tupelTmp[1] < 10 or tupelTmp[2] < 10:
-                            stateTmp = 1
-                        else:
-                            tupelTmp = (tupelTmp[0] - 5, tupelTmp[1] - 5, tupelTmp[2] - 5)
-                    else:
-                        if tupelTmp[0] > 245 or tupelTmp[1] > 245 or tupelTmp[2] > 245:
-                            stateTmp = 0
-                        else:
-                            tupelTmp = (tupelTmp[0] + 5, tupelTmp[1] + 5, tupelTmp[2] + 5)
-                    pixels.set_pixels(Adafruit_WS2801.RGB_to_color(tupelTmp[0], tupelTmp[1], tupelTmp[2]))
-                    pixels.show()
-                    time.sleep(self.time)
-            # TODO
+                Effects.pulsing(self.color, self.timer)
+
             # 7) Effect - Dim-off Pixels
             if self.effect == 7:
-                pixels.set_pixels(self.color)
-                tupelTmp = Adafruit_WS2801.color_to_RGB(self.color)
-                pixels.show()
-                tmpTimer = self.timer / pixels.count()
-                print(tmpTimer)
-                # step = self.number
-                step = 10
-                for j in range(int(256 // step)):
-                    for i in range(pixels.count()):
-                        (r, g, b) = Adafruit_WS2801.color_to_RGB(pixels.get_pixel(i))
-                        # rint(str(r) + str(g) + str(b))
-                        # print(str(pixels.get_pixel_rgb(i)))
-                        r = int(max(0, r - step))
-                        g = int(max(0, g - step))
-                        b = int(max(0, b - step))
-                        # print(str(r) + str(g) + str(b))
-                        pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(r, g, b))
-                        pixels.show
-                    pixels.show()
-                    time.sleep(tmpTimer)
+                Effects.dimOff(self.color, self.timer)
+
             # 8) Effect - Rainbow Pixels (Static color changing)
             if self.effect == 8:
-                for j in range(256):  # one cycle of all 256 colors in the wheel
-                    for i in range(pixels.count()):
-                        pixels.set_pixel(i, self.wheel(((i * 256 // pixels.count()) + j) % 256))
-                    pixels.show()
-                    if self.time > 0:
-                        time.sleep(self.time)
+                Effects.rainbow(self, self.timer)
+
             # 9) Effect - Walking Rainbow Pixels
             if self.effect == 9:
-                pixels.clear()
-                pixels.show()
-                for i in range(pixels.count()):
-                    # tricky math! we use each pixel as a fraction of the full 96-color wheel
-                    # (thats the i / strip.numPixels() part)
-                    # Then add in j which makes the colors go around per pixel
-                    # the % 96 is to make the wheel cycle around
-                    pixels.set_pixel(i, self.wheel(((i * 256 // pixels.count())) % 256))
-                    pixels.show()
-                    if self.time > 0:
-                        time.sleep(self.time)
+                Effects.rainbowWalking(self, self.timer)
+
             # 10) Effect - Pulsing Rainbow Pixels
             if self.effect == 10:
-                for j in range(256):  # one cycle of all 256 colors in the wheel
-                    for i in range(pixels.count()):
-                        pixels.set_pixel(i, self.wheel(((256 // pixels.count() + j)) % 256))
-                    pixels.show()
-                    if self.time > 0:
-                        time.sleep(self.time)
+                Effects.rainbowPulsing(self, self.timer)
+
             # -------------- NO DOKU -----------------
             # 11) Effect - Cyclon Pixels
             if self.effect == 11:
-                for i in range(pixels.count() - self.number - 2):
-                    pixels.set_pixels(0)
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                    for j in range(1, self.number + 1):
-                        pixels.set_pixel(i + j, int(self.colorList[i + j], 16))
-                    pixels.set_pixel(i + self.number + 1, int(self.colorList[i + self.number + 1], 16))
-                    pixels.show()
-                    time.sleep(self.time)
-                time.sleep(self.time)
-                for i in reversed(range(pixels.count() - self.number - 2)):
-                    pixels.set_pixels(0)
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                    for j in range(1, self.number + 1):
-                        pixels.set_pixel(i + j, int(self.colorList[i + j], 16))
-                    pixels.set_pixel(i + self.number + 1, int(self.colorList[i + self.number + 1], 16))
-                    pixels.show()
-                    time.sleep(self.time)
+                Effects.cyclon(self.colorList, self.number, self.timer)
+
             # 12) Effect - Twinkle Pixels
             if self.effect == 12:
-                pixels.set_pixels(0)
-                for i in range(pixels.count()):
-                    pixels.set_pixel(random.randint(0, pixels.count() - 1), self.color)
-                    pixels.show()
-                    time.sleep(self.time)
+                Effects.twinkle(self.color, self.timer)
+
             # 13) Effect - Twinkle Random Pixels
             if self.effect == 13:
-                pixels.set_pixels(0)
-                for i in range(pixels.count()):
-                    pixels.set_pixel(random.randint(0, pixels.count() - 1),
-                                        Adafruit_WS2801.RGB_to_color(random.randint(0, 255),
-                                                                     random.randint(0, 255),
-                                                                     random.randint(0, 255)))
-                    pixels.show()
-                    time.sleep(self.time)
-            # TODO: Pixel n outside the count of pixels erl?
+                Effects.twinkleRandomColor(self.timer)
+
             # 14) Effect - Sparkle Pixels
             if self.effect == 14:
-                pTmp = random.randint(0, pixels.count() - 1)
-                pixels.set_pixel(pTmp, int(self.colorList[pTmp], 16))
-                pixels.show()
-                time.sleep(self.time)
-                pixels.set_pixel(pTmp, 0)
-            # TODO: wie in 18 erl?
+                Effects.sparkle(self.colorList, self.timer)
+
             # 15) Effect - Snow Sparkle Pixels
             if self.effect == 15:
-                for i in range(len(self.colorList)):
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                pixels.show()
-                pTmp = random.randint(0, pixels.count() - 1)
-                pixels.set_pixel(pTmp, Adafruit_WS2801.RGB_to_color(0, 0, 0))
-                pixels.show()
-                time.sleep(self.time)
-                pixels.set_pixel(pTmp, int(self.colorList[pTmp], 16))
-                time.sleep(self.time)
+                Effects.sparkleSnow(self.colorList, self.timer)
+
             # 16) Effect - Running Pixels
             if self.effect == 16:
-                posTmp = 0
-                tupelTmp = Adafruit_WS2801.color_to_RGB(self.color)
-                for j in range(pixels.count() * 2):
-                    posTmp = posTmp + 1
-                    for i in range(pixels.count()):
-                        pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(
-                            (int(((math.sin(i + posTmp) * 127 + 128) / 255) * tupelTmp[0])),
-                            (int(((math.sin(i + posTmp) * 127 + 128) / 255) * tupelTmp[1])),
-                            (int(((math.sin(i + posTmp) * 127 + 128) / 255) * tupelTmp[2]))))
-                    pixels.show()
-                    time.sleep(self.time)
+                Effects.running(self.color, self.timer)
+
             # 17) Effect - Theater chase Pixels
             if self.effect == 17:
-                for j in range(10):
-                    for q in range(3):
-                        for i in range(0, pixels.count() - 3, 3):
-                            pixels.set_pixel(i + q, int(self.colorList[i + q], 16))
-                        pixels.show()
-                        time.sleep(self.time)
-                        for i in range(0, pixels.count() - 3, 3):
-                            pixels.set_pixel(i + q, 0)
-                        pixels.show()
-            # TODO: Pixel n outside the count of pixels
+                Effects.theaterChase(self.colorList, self.timer)
+
             # 18) Effect - Center bounce Pixels
             if self.effect == 18:
-                # outside to center
-                for i in range((pixels.count() - self.number) / 2):
-                    pixels.set_pixels(0)
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                    for j in range(1, self.number):
-                        pixels.set_pixel(i + j, int(self.colorList[i + j], 16))
-                    pixels.set_pixel(i + self.number + 1, int(self.colorList[i + self.number + 1], 16))
-                    pixels.set_pixel(pixels.count() - i - 1, int(self.colorList[pixels.count() - i - 1], 16))
-                    for j in range(self.number + 1):
-                        pixels.set_pixel(pixels.count() - i - j - 1, int(self.colorList[pixels.count() - i - j - 1], 16))
-                    pixels.set_pixel(pixels.count() - i - self.number - 1, int(self.colorList[pixels.count() - i - self.number - 1], 16))
+                Effects.centerBounce(self.colorList, self.number, self.timer)
 
-                    pixels.show()
-                    time.sleep(self.time)
-                time.sleep(self.time)
-                # center to outside
-                for i in reversed(range(0, (pixels.count() - self.number) / 2)):
-                    pixels.set_pixels(0)
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
-                    for j in range(1, self.number + 1):
-                        pixels.set_pixel(i + j, int(self.colorList[i + j], 16))
-                    pixels.set_pixel(i + self.number + 1, int(self.colorList[i + self.number + 1], 16))
-                    pixels.set_pixel(pixels.count() - i - 1, int(self.colorList[pixels.count() - i - 1], 16))
-                    for j in range(self.number + 1):
-                        pixels.set_pixel(pixels.count() - i - j - 1, int(self.colorList[pixels.count() - i - j - 1], 16))
-                    pixels.set_pixel(pixels.count() - i - self.number - 1, int(self.colorList[pixels.count() - i - self.number - 1], 16))
-
-                    pixels.show()
-                    time.sleep(self.time)
             # 22) Effect - Fire Pixels
             if self.effect == 67:
-                '''
-                TODO:
-                gPal = CRGBPalette16( CRGB::Black, CRGB::Red, CRGB::Yellow, CRGB::White);
-                gPal = CRGBPalette16( CRGB::Black, CRGB::Blue, CRGB::Aqua,  CRGB::White);
-                gPal = CRGBPalette16( CRGB::Black, CRGB::Red, CRGB::White);
-                '''
-                for i in range(pixels.count()):
-                    pos = int(pixels.count() / 4)
-                    if i < pos:
-                        for j in range(pos):
-                            pixels.set_pixel(j, 0)
-                    elif i < (pos * 2):
-                        for j in range(pos, pos * 2):
-                            # pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(166, 0, 0))
-                            pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(4, 20, 128))
-                    elif i < (pos * 3):
-                        for j in range(pos * 2, pos * 3):
-                            # pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(237, 232, 5))
-                            pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(29, 60, 203))
-                    else:
-                        for j in range(pos * 3, pixels.count()):
-                            pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(255, 255, 255))
-                    pixels.show()
+                Effects.fire(self.timer)
 
-
-                cooldownTmp = 0
-                # fast flames cool down 55
-                cooling = 20
-                # chance dass flamme entzuendet 120
-                sparking = 120
-                # heat = range(0, pixels.count())
-                heat = [0] * pixels.count()
-
-                for i in range(pixels.count()):
-                    cooldownTmp = random.randint(0, ((cooling * 10) / pixels.count()) + 2);
-                    if cooldownTmp > heat[i]:
-                        heat[i] = 0
-                    else:
-                        heat[i] = heat[i] - cooldownTmp
-
-                for k in reversed(range(2, pixels.count() - 1)):
-                    heat[k] = (heat[k-1] + heat[k-2] + heat[k-2]) / 3
-
-                if random.randint(0, 255) < sparking:
-                    y = random.randint(0, 7)
-                    heat[y] = heat[y] + random.randint(160, 255)
-
-                for j in range(pixels.count()):
-                    t = int(round((heat[j] / 255.0) * 191))
-                    heatramp = t & 0x3F
-                    heatramp <<= 2
-
-                    if t > 0x80:
-                        pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(255, 255, heatramp))
-                    elif t > 0x40:
-                        pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(255, heatramp, 0))
-                    else:
-                        pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(heatramp, 0, 0))
-                pixels.show()
-                time.sleep(self.time)
-
-            # TODO: doesnt work
             # 23) Effect - Meteor Pixels
             if self.effect == 68:
-                meteorTrailDecay = 64
-                pixels.set_pixels(0)
-                for i in range(pixels.count() * 2):
-                    for j in range(pixels.count()):
-                        if random.randint(0, 10) > 5:
-                            r, g, b = Adafruit_WS2801.color_to_RGB(pixels.get_pixel(j))
-                            if r <= 10:
-                                r = 0
-                            else:
-                                r = r - int((r * meteorTrailDecay / 256))
-                            if g <= 10:
-                                g = 0
-                            else:
-                                g = g - int((g * meteorTrailDecay / 256))
-                            if b <= 10:
-                                b = 0
-                            else:
-                                b = b - int((b * meteorTrailDecay / 256))
-                            pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(r, g, b))
-                    for j in range(self.number):
-                        if (i-j < pixels.count()) and (i-j >= 0):
-                            pixels.set_pixel(i - j, self.color)
-                pixels.show()
-                time.sleep(self.time)
+                Effects.meteor(self.color, self.number, self.timer)
 
             # * -----------
             # * Modes
@@ -594,4 +337,3 @@ class Blink(object):
             # self.value = self.value + 1
             # print(self.value)
             # time.sleep(self.time)
-
