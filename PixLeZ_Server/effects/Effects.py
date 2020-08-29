@@ -56,21 +56,21 @@ def fillNPixels(colorList: List[str], number: int):
     pixels.show()
 
 
-def emptyPixels(colorList: List[str], timespan: float):
+def emptyPixels(colorList: List[str], timer: float):
     for i in range(len(colorList)):
         pixels.set_pixel(i, int(colorList[i], 16))
     pixels.show()
-    tmpTimer = timespan / pixels.count()
+    tmpTimer = timer / pixels.count()
     for i in range(pixels.count()):
         pixels.set_pixel(i, 0)
         pixels.show()
         time.sleep(tmpTimer)
 
 
-def countdown(timespan: float):
+def countdown(timer: float):
     pixels.clear()
     pixels.show()
-    tmpTimer = timespan / pixels.count()
+    tmpTimer = timer / pixels.count()
     for i in range(pixels.count()):
         pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(255, 0, 0))
         pixels.show()
@@ -103,12 +103,12 @@ def pulsing(color: int, timespan: float):
         time.sleep(timespan)
 
 
-def dimOff(color: int, timespan: float):
+def dimOff(color: int, timer: float):
     # TODO
     pixels.set_pixels(color)
     tupelTmp = Adafruit_WS2801.color_to_RGB(color)
     pixels.show()
-    tmpTimer = timespan / pixels.count()
+    tmpTimer = timer / pixels.count()
     print(tmpTimer)
     # step = self.number
     step = 10

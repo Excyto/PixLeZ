@@ -255,7 +255,7 @@ class Blink(object):
 
             # 6) Effect - Pulsing Pixels
             if self.effect == 6:
-                Effects.pulsing(self.color, self.timer)
+                Effects.pulsing(self.color, self.time)
 
             # 7) Effect - Dim-off Pixels
             if self.effect == 7:
@@ -263,56 +263,56 @@ class Blink(object):
 
             # 8) Effect - Rainbow Pixels (Static color changing)
             if self.effect == 8:
-                Effects.rainbow(self, self.timer)
+                Effects.rainbow(self, self.time)
 
             # 9) Effect - Walking Rainbow Pixels
             if self.effect == 9:
-                Effects.rainbowWalking(self, self.timer)
+                Effects.rainbowWalking(self, self.time)
 
             # 10) Effect - Pulsing Rainbow Pixels
             if self.effect == 10:
-                Effects.rainbowPulsing(self, self.timer)
+                Effects.rainbowPulsing(self, self.time)
 
             # -------------- NO DOKU -----------------
             # 11) Effect - Cyclon Pixels
             if self.effect == 11:
-                Effects.cyclon(self.colorList, self.number, self.timer)
+                Effects.cyclon(self.colorList, self.number, self.time)
 
             # 12) Effect - Twinkle Pixels
             if self.effect == 12:
-                Effects.twinkle(self.color, self.timer)
+                Effects.twinkle(self.color, self.time)
 
             # 13) Effect - Twinkle Random Pixels
             if self.effect == 13:
-                Effects.twinkleRandomColor(self.timer)
+                Effects.twinkleRandomColor(self.time)
 
             # 14) Effect - Sparkle Pixels
             if self.effect == 14:
-                Effects.sparkle(self.colorList, self.timer)
+                Effects.sparkle(self.colorList, self.time)
 
             # 15) Effect - Snow Sparkle Pixels
             if self.effect == 15:
-                Effects.sparkleSnow(self.colorList, self.timer)
+                Effects.sparkleSnow(self.colorList, self.time)
 
             # 16) Effect - Running Pixels
             if self.effect == 16:
-                Effects.running(self.color, self.timer)
+                Effects.running(self.color, self.time)
 
             # 17) Effect - Theater chase Pixels
             if self.effect == 17:
-                Effects.theaterChase(self.colorList, self.timer)
+                Effects.theaterChase(self.colorList, self.time)
 
             # 18) Effect - Center bounce Pixels
             if self.effect == 18:
-                Effects.centerBounce(self.colorList, self.number, self.timer)
+                Effects.centerBounce(self.colorList, self.number, self.time)
 
             # 22) Effect - Fire Pixels
             if self.effect == 67:
-                Effects.fire(self.timer)
+                Effects.fire(self.time)
 
             # 23) Effect - Meteor Pixels
             if self.effect == 68:
-                Effects.meteor(self.color, self.number, self.timer)
+                Effects.meteor(self.color, self.number, self.time)
 
             # * -----------
             # * Modes
