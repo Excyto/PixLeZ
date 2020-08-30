@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
 from flask import Flask, request
-import os
-import subprocess
-import sys
-import time
-from multiprocessing import Process
 from Blink import Blink
 
 '''

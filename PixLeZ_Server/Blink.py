@@ -1,19 +1,14 @@
 #!/usr/bin/env python
 
-import sys
-import random
-import math
-
 import time
-import RPi.GPIO as GPIO
 
 import Adafruit_WS2801
-import Adafruit_GPIO.SPI as SPI
 
 from multiprocessing import Process
 from multiprocessing import Queue
 from threading import Thread
 
+import Constants
 from effects import Effects
 
 '''
@@ -21,14 +16,7 @@ from effects import Effects
     
 '''
 
-# ! Select your pixel count
-# 5 * 32 = 160 LEDs
-PIXEL_COUNT = 160
-
-# Hardware SPI
-SPI_PORT = 0
-SPI_DEVICE = 0
-pixels = Adafruit_WS2801.WS2801Pixels(PIXEL_COUNT, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE), gpio=GPIO)
+pixels = Constants.pixels
 
 
 class Blink(object):
@@ -37,7 +25,7 @@ class Blink(object):
         self.value = 0
         self.color = Adafruit_WS2801.RGB_to_color(255, 255, 255)
         self.colorList = []
-        for i in range(PIXEL_COUNT):
+        for i in range(Constants.PIXEL_COUNT):
             self.colorList.append('000000')
         self.time = 0.1
         self.timer = 20.0
@@ -65,7 +53,7 @@ class Blink(object):
             pixels.clear()
             pixels.show()
             self.process = self.process = Process(target=self.run, args=(
-            self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
+                self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
 
     def get_status(self):
         col1 = self.color_to_RGB(self.color)
@@ -106,12 +94,12 @@ class Blink(object):
             self.color = int(value, 16)
             self.queueColor.put(self.color)
 
-            for i in range(PIXEL_COUNT):
+            for i in range(Constants.PIXEL_COUNT):
                 self.colorList[i] = value
             self.queueColorList.put(self.colorList)
         else:
             self.color = int(value, 16)
-            for i in range(PIXEL_COUNT):
+            for i in range(Constants.PIXEL_COUNT):
                 self.colorList[i] = value
 
     # colors = Hex-String list
