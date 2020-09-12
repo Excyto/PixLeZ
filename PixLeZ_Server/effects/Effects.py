@@ -37,11 +37,11 @@ def walkingPixels(colorList: List[str], timespan: float, reverse: bool):
             time.sleep(timespan)
 
 
-def fillNPixels(colorList: List[str], number: int):
-    for i in range(number):
-        pixels.set_pixel(i, int(colorList[i], 16))
-    for i in range(number, pixels.count()):
-        pixels.set_pixel(i, Adafruit_WS2801.RGB_to_color(0, 0, 0))
+def fillNPixels(color: int, number: int):
+    pixels.clear()
+    step = pixels.count() / number
+    for i in range(0, number):
+        pixels.set_pixel(min(int(i * step), pixels.count() - 1), color)
     pixels.show()
 
 

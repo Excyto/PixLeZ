@@ -231,7 +231,7 @@ class Blink(object):
 
             # 3) Effect - Fill number Pixels
             if self.effect == 3:
-                Effects.fillNPixels(self.colorList, self.number)
+                Effects.fillNPixels(self.color, self.number)
 
             # 4) Effect - Get empty Pixels
             if self.effect == 4:
