@@ -17,6 +17,10 @@ class _MyWidgetState extends State<ConfigurationStarter>
   double _valR = 0;
   double _valG = 0;
   double _valB = 0;
+  double _valR_src = 0;
+  double _valG_src = 0;
+  double _valB_src = 0;
+  double _valAlpha = 100;
 
   var _numController = TextEditingController();
   var _timeController = TextEditingController();
@@ -54,9 +58,9 @@ class _MyWidgetState extends State<ConfigurationStarter>
 
           setState(() {
             //print(color);
-            _valR = double.parse(color.red.toString());
-            _valG = double.parse(color.green.toString());
-            _valB = double.parse(color.blue.toString());
+            _valR = _valR_src = double.parse(color.red.toString());
+            _valG = _valG_src = double.parse(color.green.toString());
+            _valB = _valB_src = double.parse(color.blue.toString());
             _timeController.text = double.parse(time[1].toString()).toString();
             _timerController.text =
                 double.parse(timer[1].toString()).toString();
@@ -118,10 +122,11 @@ class _MyWidgetState extends State<ConfigurationStarter>
               child: Slider(
                 min: 0,
                 max: 255,
-                value: _valR,
+                value: _valR_src,
                 onChanged: (value) {
                   setState(() {
-                    _valR = value;
+                    _valR_src = value;
+                    _valR = _valR_src*(_valAlpha/100);
                   });
                 },
               ),
@@ -139,10 +144,11 @@ class _MyWidgetState extends State<ConfigurationStarter>
               child: Slider(
                 min: 0,
                 max: 255,
-                value: _valG,
+                value: _valG_src,
                 onChanged: (value) {
                   setState(() {
-                    _valG = value;
+                    _valG_src = value;
+                    _valG = _valG_src*(_valAlpha/100);
                   });
                 },
               ),
@@ -160,10 +166,36 @@ class _MyWidgetState extends State<ConfigurationStarter>
               child: Slider(
                 min: 0,
                 max: 255,
-                value: _valB,
+                value: _valB_src,
                 onChanged: (value) {
                   setState(() {
-                    _valB = value;
+                    _valB_src = value;
+                    _valB = _valB_src*(_valAlpha/100);
+                  });
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                activeTrackColor: Colors.white,
+                inactiveTrackColor: Colors.white12,
+                thumbColor: Colors.white,
+                overlayColor: Colors.white.withAlpha(32),
+              ),
+              child: Slider(
+                min: 0,
+                max: 100,
+                label: 'Intensity',
+                value: _valAlpha,
+                onChanged: (value) {
+                  setState(() {
+                    _valAlpha = value;
+                    _valB = _valB_src*(_valAlpha/100);
+                    _valG = _valG_src*(_valAlpha/100);
+                    _valR = _valR_src*(_valAlpha/100);
                   });
                 },
               ),
