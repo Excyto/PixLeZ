@@ -36,13 +36,8 @@ jobs:
     - name: Get Dependencies
       working-directory: ./PixLeZ_Application
       run: flutter pub get
-    
-    # Statically analyze the Dart code for any errors.
-    - name: Code analysis
-      working-directory: ./PixLeZ_Application
-      run: flutter analyze .
-      
-    # Build apk.
+     
+   # Build apk.
     - name: Build APK
       working-directory: ./PixLeZ_Application
       run: flutter build apk
