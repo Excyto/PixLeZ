@@ -27,6 +27,8 @@ jobs:
       with:
         java-version: '15'
     
+    - run: cd PixLeZ_Application
+      
     # Setup the flutter environment.
     - uses: subosito/flutter-action@v1
       with:
