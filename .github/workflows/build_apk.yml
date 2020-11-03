@@ -37,7 +37,7 @@ jobs:
       working-directory: ./PixLeZ_Application
       run: flutter pub get
      
-   # Build apk.
+   # Build apk. Those 3 steps are necessary due to a bug in newer versions (https://stackoverflow.com/questions/62394034/flutter-can-not-build-android-apk)
     - name: Build APK
       working-directory: ./PixLeZ_Application
       run: | 
@@ -49,4 +49,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: PixLeZ
-        path: build/app/outputs/apk/release/PixLeZ.apk
+        path: build/app/outputs/apk/release/app-release.apk
