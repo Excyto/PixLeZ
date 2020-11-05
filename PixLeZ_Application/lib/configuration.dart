@@ -126,7 +126,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 onChanged: (value) {
                   setState(() {
                     _valR_src = value;
-                    _valR = _valR_src*(_valAlpha/100);
+                    _valR = _valR_src * (_valAlpha / 100);
                   });
                 },
               ),
@@ -148,7 +148,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 onChanged: (value) {
                   setState(() {
                     _valG_src = value;
-                    _valG = _valG_src*(_valAlpha/100);
+                    _valG = _valG_src * (_valAlpha / 100);
                   });
                 },
               ),
@@ -170,7 +170,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 onChanged: (value) {
                   setState(() {
                     _valB_src = value;
-                    _valB = _valB_src*(_valAlpha/100);
+                    _valB = _valB_src * (_valAlpha / 100);
                   });
                 },
               ),
@@ -180,9 +180,9 @@ class _MyWidgetState extends State<ConfigurationStarter>
             flex: 1,
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
-                activeTrackColor: Colors.white,
-                inactiveTrackColor: Colors.white12,
-                thumbColor: Colors.white,
+                activeTrackColor: Colors.grey[400],
+                inactiveTrackColor: Colors.grey[200],
+                thumbColor: Colors.grey[400],
                 overlayColor: Colors.white.withAlpha(32),
               ),
               child: Slider(
@@ -193,9 +193,9 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 onChanged: (value) {
                   setState(() {
                     _valAlpha = value;
-                    _valB = _valB_src*(_valAlpha/100);
-                    _valG = _valG_src*(_valAlpha/100);
-                    _valR = _valR_src*(_valAlpha/100);
+                    _valB = _valB_src * (_valAlpha / 100);
+                    _valG = _valG_src * (_valAlpha / 100);
+                    _valR = _valR_src * (_valAlpha / 100);
                   });
                 },
               ),
