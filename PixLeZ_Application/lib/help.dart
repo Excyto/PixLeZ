@@ -35,9 +35,7 @@ class _HelpStarterState extends State<HelpStarter>
           if (snapshot.hasData) {
             return Markdown(
               data: snapshot.data,
-              onTapLink: (href) {
-                launch(href);
-              },
+              onTapLink: (text, href, title) => launch(text),
               styleSheet: MarkdownStyleSheet(
                   // h1: TextStyle(color: Colors.orange, fontSize: 40),
                   ),

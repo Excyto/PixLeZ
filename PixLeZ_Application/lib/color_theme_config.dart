@@ -405,6 +405,7 @@ class _MyWidgetState extends State<ColorTheme>
                     gradient: LinearGradient(
                       // end: Alignment(0.4, 0.0),
                       colors: stateN.activConfig.preview,
+                      // colors: [Colors.white, Colors.blue],
                     ),
                   ),
                 ),
@@ -744,8 +745,11 @@ class _LoaderDialogState extends State<LoaderDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('Load Pixel Configuration'),
-      content: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 400.0),
+      content: Container(
+        height: MediaQuery.of(context).size.height -
+            (MediaQuery.of(context).size.height / 4),
+        width: MediaQuery.of(context).size.width -
+            (MediaQuery.of(context).size.width / 4),
         child: Consumer<StateNotifier>(
           builder: (context, stateN, child) => ListView.builder(
             itemCount: stateN.getConfigLength(),

@@ -1,29 +1,11 @@
 # PixLeZ - About
 
-## License PixLeZ
+PixLeZ is created by Tobias Schreiweis in 2020.  
 
-MIT License
+It started as a private project with the main focus to improve my python skills with the Raspberry Pi and learning new programing languages like dart with the framework flutter. After some request from other peoples getting the application I decided to publish it on GitHub.
 
-Copyright (c) 2020 Tobias Schreiweis
+You are welcome to extend the PixLeZ-Bundle or send me your ideas and I would be glad about adding your code and ideas to this repository.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+If I can be of assistance, please do not hesitate to contact me.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-## License of other used Frameworks
-
-tbd
+[![alt text](https://img.shields.io/github/followers/Excyto?label=Github&style=social)](https://github.com/Excyto)
