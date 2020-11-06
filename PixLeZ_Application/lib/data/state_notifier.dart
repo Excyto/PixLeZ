@@ -47,7 +47,7 @@ class StateNotifier extends ChangeNotifier {
 
   void setActivConfig(ColThemeConfiguration colThemeConfiguration) {
     activConfig = colThemeConfiguration;
-    notifyListeners();
+    // notifyListeners();
   }
 
   void addConfig(ColThemeConfiguration config) {

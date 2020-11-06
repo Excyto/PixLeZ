@@ -31,6 +31,8 @@ class ColThemeConfiguration {
       List<String> send, String name) {
     this.entries = entries;
     this.preview = preview;
+    preview.add(Colors.white);
+    preview.add(Colors.white);
     this.send = send;
     this.name = name;
     var uuid = Uuid();

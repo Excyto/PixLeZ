@@ -7,11 +7,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:PixLeZ/app_theme/bottom_navigator.dart';
 import 'package:PixLeZ/app_theme/app_drawer.dart';
 
-class AboutStarter extends StatefulWidget {
-  _AboutStarterState createState() => _AboutStarterState();
+class LicenseStarter extends StatefulWidget {
+  _LicenseStarterState createState() => _LicenseStarterState();
 }
 
-class _AboutStarterState extends State<AboutStarter>
+class _LicenseStarterState extends State<LicenseStarter>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class _AboutStarterState extends State<AboutStarter>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('PixLeZ - About'),
+        title: Text('PixLeZ - License'),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -30,7 +30,7 @@ class _AboutStarterState extends State<AboutStarter>
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-        future: rootBundle.loadString("lib/assets/about_page.md"),
+        future: rootBundle.loadString("lib/assets/license_page.md"),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
             return Markdown(
