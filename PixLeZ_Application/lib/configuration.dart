@@ -19,7 +19,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
   double _valB = 0;
   double _valR_src = 0;
   double _valG_src = 0;
-  double _valB_src = 255;
+  double _valB_src = 0;
   double _valAlpha = 100;
 
   var _numController = TextEditingController();
