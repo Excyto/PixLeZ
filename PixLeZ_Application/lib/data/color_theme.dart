@@ -47,14 +47,14 @@ class ColThemeConfigurationAdapter extends TypeAdapter<ColThemeConfiguration> {
   @override
   ColThemeConfiguration read(BinaryReader reader) {
     var entriesLength = reader.readUint32();
-    List<ColThemeEntry> entries = new List<ColThemeEntry>();
+    List<ColThemeEntry> entries = [];
     for (int i = 0; i < entriesLength; i++) {
       entries.add(ColThemeEntry(reader.readInt(), reader.readInt(),
           reader.readInt(), reader.readInt(), reader.readInt()));
     }
 
     var previewLength = reader.readUint32();
-    List<Color> preview = new List<Color>();
+    List<Color> preview = [];
     for (int i = 0; i < previewLength; i++) {
       preview.add(Color(reader.readInt()));
     }

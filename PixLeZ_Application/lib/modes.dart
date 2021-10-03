@@ -36,7 +36,7 @@ class _MyWidgetState extends State<ModesStarter>
     String url =
         Provider.of<StateNotifier>(context, listen: false).ip.toString() + res;
     try {
-      await http.get(url);
+      await http.get(Uri.parse(url));
       Provider.of<StateNotifier>(context, listen: false).setConnected(true);
     } catch (e) {
       Provider.of<StateNotifier>(context, listen: false).setRunning(0);

@@ -133,8 +133,8 @@ class _MyWidgetState extends State<ColorTheme>
   // clear Lists
   void _clearActuallConfig() {
     Provider.of<StateNotifier>(context, listen: false).setActivConfig(
-        new ColThemeConfiguration(new List<ColThemeEntry>(), new List<Color>(),
-            new List<String>(_maxPixel), ''));
+        new ColThemeConfiguration([], [],
+            List.filled(_maxPixel, "0x000000"), ''));
   }
 
   // update Color Preview
@@ -144,8 +144,8 @@ class _MyWidgetState extends State<ColorTheme>
     ColThemeEntry tmpNext;
     int range = 0;
     double steps = 0;
-    List<String> _pixelListTmp = new List(_maxPixel);
-    List<Color> _colListTmp = new List();
+    List<String> _pixelListTmp = List.filled(_maxPixel, "0x000000");
+    List<Color> _colListTmp = [];
     // action 1 = pixel flow
     // action 2 = pixel static
     // action 3 = pixel static floating
@@ -236,7 +236,7 @@ class _MyWidgetState extends State<ColorTheme>
     try {
       // await http.get(url);
       await http
-          .post(url, body: body, headers: {'Content-type': 'application/json'});
+          .post(Uri.parse(url), body: body, headers: {'Content-type': 'application/json'});
 
       Provider.of<StateNotifier>(context, listen: false).setConnected(true);
     } catch (e) {
@@ -253,8 +253,8 @@ class _MyWidgetState extends State<ColorTheme>
     if (Provider.of<StateNotifier>(context, listen: false).activConfig ==
         null) {
       Provider.of<StateNotifier>(context, listen: false).setActivConfig(
-          new ColThemeConfiguration(new List<ColThemeEntry>(),
-              new List<Color>(), new List<String>(_maxPixel), ''));
+          new ColThemeConfiguration([],
+              [], List.filled(_maxPixel, "0x000000"), ''));
     }
   }
 
@@ -621,7 +621,7 @@ class _PickerDialogState extends State<PickerDialog> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () {
             try {
               int tmp = int.parse(_startPixelController.text);
@@ -643,7 +643,7 @@ class _PickerDialogState extends State<PickerDialog> {
           },
           child: Text('Add'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.pop(context, null);
           },
@@ -685,12 +685,12 @@ class _SaverDialogState extends State<SaverDialog> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () {
             setState(() {
               if (_nameController.text.isEmpty) {
                 final snackBar = SnackBar(content: Text('Name is Empty'));
-                Scaffold.of(context).showSnackBar(snackBar);
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 _nameController.clear();
               } else {
                 Provider.of<StateNotifier>(context, listen: false)
@@ -702,11 +702,11 @@ class _SaverDialogState extends State<SaverDialog> {
 
                 Provider.of<StateNotifier>(context, listen: false)
                     .setActivConfig(new ColThemeConfiguration(
-                        new List<ColThemeEntry>(),
-                        new List<Color>(),
-                        new List<String>(
+                    [],
+                    [],
+                        List.filled(
                             Provider.of<StateNotifier>(context, listen: false)
-                                .maxPixel),
+                                .maxPixel,"0x000000"),
                         ''));
 
                 Navigator.pop(context);
@@ -715,7 +715,7 @@ class _SaverDialogState extends State<SaverDialog> {
           },
           child: Text('Save'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.pop(context, null);
           },
@@ -816,7 +816,7 @@ class _LoaderDialogState extends State<LoaderDialog> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () {
             if (Provider.of<StateNotifier>(context, listen: false)
                     .selectedConfig ==
@@ -830,9 +830,9 @@ class _LoaderDialogState extends State<LoaderDialog> {
                         Provider.of<StateNotifier>(context, listen: false)
                             .selectedConfig);
 
-            List entries = new List<ColThemeEntry>();
-            List colors = new List<Color>();
-            List send = new List<String>();
+            List entries = [];
+            List colors = [];
+            List send = [];
 
             for (var entry in conf.entries) {
               entries.add(ColThemeEntry(

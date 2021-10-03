@@ -19,7 +19,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
   double _valB = 0;
   double _valR_src = 0;
   double _valG_src = 0;
-  double _valB_src = 0;
+  double _valB_src = 255;
   double _valAlpha = 100;
 
   var _numController = TextEditingController();
@@ -31,7 +31,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
     String url = ipAd + res;
     http.Response response;
     try {
-      response = await http.get(url);
+      response = await http.get(Uri.parse(url));
       if (response.statusCode != 200) {
         Provider.of<StateNotifier>(context, listen: false).setRunning(0);
         Provider.of<StateNotifier>(context, listen: false).setConnected(false);
@@ -239,7 +239,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                     padding: EdgeInsets.all(10.0),
                     child: ButtonBar(
                       children: <Widget>[
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text('Set Color'),
                           onPressed: () {
                             int r = _valR.round();
@@ -298,7 +298,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                     _numController.text = '-1';
                     final snackBar = SnackBar(
                         content: Text('Please enter a decimal number.'));
-                    Scaffold.of(context).showSnackBar(snackBar);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
               ),
@@ -333,7 +333,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                       _timeController.text = '-1';
                       final snackBar = SnackBar(
                           content: Text('Please enter a decimal number.'));
-                      Scaffold.of(context).showSnackBar(snackBar);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
                   }
                 },
@@ -369,7 +369,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                       _timerController.text = '-1';
                       final snackBar = SnackBar(
                           content: Text('Please enter a decimal number.'));
-                      Scaffold.of(context).showSnackBar(snackBar);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
                   }
                 },
@@ -382,13 +382,13 @@ class _MyWidgetState extends State<ConfigurationStarter>
               padding: EdgeInsets.all(10.0),
               child: ButtonBar(
                 children: <Widget>[
-                  new RaisedButton(
+                  new ElevatedButton(
                     child: Text('Update'),
                     onPressed: () {
                       sendRequest("/status");
                     },
                   ),
-                  new RaisedButton(
+                  new ElevatedButton(
                     child: Text('Restart'),
                     onPressed: () {
                       setState(
@@ -407,13 +407,13 @@ class _MyWidgetState extends State<ConfigurationStarter>
                       );
                     },
                   ),
-                  new RaisedButton(
+                  new ElevatedButton(
                     child: Text('Start'),
                     onPressed: () {
                       sendRequest("/start");
                     },
                   ),
-                  new RaisedButton(
+                  new ElevatedButton(
                     child: Text('Stop'),
                     onPressed: () {
                       sendRequest("/stop");

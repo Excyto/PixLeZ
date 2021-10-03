@@ -36,10 +36,9 @@ class _HomePageState extends State<HomePage> {
       title: 'PixLeZ',
       theme: ThemeData(),
       darkTheme: ThemeData.dark().copyWith(
-        accentColor: Colors.orange,
         bottomAppBarColor: Colors.orange,
         indicatorColor: Colors.orange,
-        scaffoldBackgroundColor: Colors.grey[700],
+        scaffoldBackgroundColor: Colors.grey[700], colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.orange),
       ),
       home: Scaffold(
         // https://stackoverflow.com/questions/46551268/when-the-keyboard-appears-the-flutter-widgets-resize-how-to-prevent-this
