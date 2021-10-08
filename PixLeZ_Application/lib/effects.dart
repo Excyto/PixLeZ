@@ -24,8 +24,8 @@ class _MyWidgetState extends State<EffectsStarter>
     'Dim Off',
     'Rainbow Mode',
     'Rainbow Walk',
-    'Rainbow Puls',
-    'Cyclon Pixels',
+    'Rainbow Pulse',
+    'Cyclone Pixels',
     'Twinkle It',
     'Twinkle It Colorful',
     'The Sparkle Pixels',
@@ -46,7 +46,7 @@ class _MyWidgetState extends State<EffectsStarter>
     'The Pixels change in the Spectrum of the Rainbow',
     'Pixels walking in the Spectrum of the Rainbow',
     'Pixels pulsing in the Spectrum of the Rainbow',
-    'Pixels making a huge Cyclon',
+    'Pixels making a huge Cyclone',
     'Pixels can twinkle',
     'Pixels can twinkle in different colors',
     'What a sparkle Pixel',
@@ -104,7 +104,7 @@ class _MyWidgetState extends State<EffectsStarter>
     String url =
         Provider.of<StateNotifier>(context, listen: false).ip.toString() + res;
     try {
-      await http.get(url);
+      await http.get(Uri.parse(url));
       Provider.of<StateNotifier>(context, listen: false).setConnected(true);
     } catch (e) {
       Provider.of<StateNotifier>(context, listen: false).setRunning(0);

@@ -13,12 +13,12 @@ class StateNotifier extends ChangeNotifier {
   bool connected = false;
   int mode = -1;
   int effect = -1;
-  String version = 'v2.3.3';
+  String version = 'v2.3.5';  // Change this in pubspec.yaml also!
   String about;
 
   // Color Theme Configuration
   ColThemeConfiguration activConfig;
-  List<ColThemeConfiguration> configList = new List<ColThemeConfiguration>();
+  List<ColThemeConfiguration> configList = [];
   int selectedConfig = -1;
 
   StateNotifier() {
@@ -27,7 +27,7 @@ class StateNotifier extends ChangeNotifier {
         this.version +
         '\n\nCreated by Tobias Schreiweis in 2020 ' +
         '\n\nPixLeZ is used controlling Pixels on a Raspberry Pi.' +
-        '\nFor more Informations read the documentation.' +
+        '\nFor more information read the documentation.' +
         '\n\nLicense: tbd';
     loadDatabase();
   }
