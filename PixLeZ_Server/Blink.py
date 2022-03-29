@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import time
-
-import adafruit_ws2801
+import typing
 
 from multiprocessing import Process
 from multiprocessing import Queue
@@ -67,18 +66,18 @@ class Blink(object):
     # * Converts the RGB in different color schemes
     # * -----------
 
-    def RGB_to_color(self, r, g, b):
+    def RGB_to_color(self, r: int, g: int, b: int):
         return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF)
 
-    def color_to_RGB(self, color):
+    def color_to_RGB(self, color: int) -> typing.Tuple[int, int, int]:
         return (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF
 
-    def hex_to_RGB(self, hex):
+    def hex_to_RGB(self, hex: str) -> typing.Tuple[int, int, int]:
         hex = hex.lstrip('#')
         # print('RGB =', tuple(int(hex[i:i + 2], 16) for i in (0, 2, 4)))
         return tuple(int(hex[i:i + 2], 16) for i in (0, 2, 4))
 
-    def RGB_to_hex(self, r, g, b):
+    def RGB_to_hex(self, r: int, g: int, b: int) -> str:
         st = '{:02x}{:02x}{:02x}'.format(r, g, b)
         st = st.upper()
         return st
@@ -87,7 +86,6 @@ class Blink(object):
     # * Set methods uses by flask server
     # * -----------
 
-    # TODO: Adjust these ones!
     # value = Hex-String
     # color = 28-Bit Int Value // No more, it is now a rgb tuple
     def set_color(self, value):
@@ -106,10 +104,10 @@ class Blink(object):
     # colors = Hex-String list
     def set_pixels(self, colors):
         if self.process.is_alive():
-            self.colorList = colors
+            self.colorList = self.hex_to_RGB(colors)
             self.queueColorList.put(self.colorList)
         else:
-            self.colorList = colors
+            self.colorList = self.hex_to_RGB(colors)
 
     # Set time for changing in some Effects
     def set_time(self, value):
@@ -169,7 +167,7 @@ class Blink(object):
             pos -= 170
             return (0, pos * 3, 255 - pos * 3)
 
-    # col := (r, g, b) - Tupel
+    # col := (r, g, b) - Tuple
     def road_map(self, *col):
         length = len(col)
         part = int(len(pixels) / (len(col) - 1))
@@ -204,7 +202,7 @@ class Blink(object):
 
     # new process -> communication with queue
     def run(self, queueColor, queueColorList, queueTime, queueNumber):
-        # check Queue -> oefters abfragen!
+        # check Queue -> check more often!
         t = Thread(target=self.checkQueue, daemon=True)
         t.start()
         while True:

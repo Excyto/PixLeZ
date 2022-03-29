@@ -6,8 +6,6 @@ import math
 import time
 from typing import List
 
-import adafruit_ws2801
-
 import Blink
 import Constants
 
