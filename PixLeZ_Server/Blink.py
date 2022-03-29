@@ -50,7 +50,7 @@ class Blink(object):
     def stop(self):
         if self.process.is_alive():
             self.process.terminate()
-            pixels.clear()
+            pixels.fill((0, 0, 0))
             pixels.show()
             self.process = self.process = Process(target=self.run, args=(
                 self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
@@ -89,19 +89,19 @@ class Blink(object):
 
     # TODO: Adjust these ones!
     # value = Hex-String
-    # color = 28-Bit Int Value
+    # color = 28-Bit Int Value // No more, it is now a rgb tuple
     def set_color(self, value):
         if self.process.is_alive():
-            self.color = int(value, 16)
+            self.color = self.hex_to_RGB(value)
             self.queueColor.put(self.color)
 
             for i in range(Constants.PIXEL_COUNT):
-                self.colorList[i] = value
+                self.colorList[i] = self.hex_to_RGB(value)
             self.queueColorList.put(self.colorList)
         else:
-            self.color = int(value, 16)
+            self.color = self.hex_to_RGB(value)
             for i in range(Constants.PIXEL_COUNT):
-                self.colorList[i] = value
+                self.colorList[i] = self.hex_to_RGB(value)
 
     # colors = Hex-String list
     def set_pixels(self, colors):
@@ -204,13 +204,10 @@ class Blink(object):
 
     # new process -> communication with queue
     def run(self, queueColor, queueColorList, queueTime, queueNumber):
-        tmp = 0
         # check Queue -> oefters abfragen!
-        t = Thread(target=self.checkQueue)
-        t.setDaemon(True)
+        t = Thread(target=self.checkQueue, daemon=True)
         t.start()
         while True:
-
             time.sleep(0.001)
 
             # * -----------

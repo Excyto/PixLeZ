@@ -21,14 +21,14 @@ def showAll(colorTupleList: List[tuple]):
 
 
 def walkingPixels(colorTupleList: List[tuple], timespan: float, reverse: bool):
-    pixels.clear()
+    pixels.fill((0, 0, 0))
     pixels.show()
     for i in range(len(pixels)):
         rangeTmp = range(i, len(pixels))
         if reverse:
             rangeTmp = reversed(rangeTmp)
         for j in rangeTmp:
-            pixels.clear()
+            pixels.fill((0, 0, 0))
             for k in range(i):
                 pixels[k] = colorTupleList[k]
                 time.sleep(timespan)
@@ -38,7 +38,7 @@ def walkingPixels(colorTupleList: List[tuple], timespan: float, reverse: bool):
 
 
 def fillNPixels(colorTuple: tuple, number: int):
-    pixels.clear()
+    pixels.fill((0, 0, 0))
     step = len(pixels) / number
     for i in range(0, number):
         pixels[min(int(i * step), len(pixels) - 1)] = colorTuple
@@ -58,7 +58,7 @@ def emptyPixels(colorTupleList: List[tuple], timer: float):
 
 
 def countdown(timer: float):
-    pixels.clear()
+    pixels.fill((0, 0, 0))
     pixels.show()
     tmpTimer = timer / len(pixels)
     for i in range(len(pixels)):
@@ -126,7 +126,7 @@ def rainbow(blink: Blink, timespan: float):
 
 
 def rainbowWalking(blink: Blink, timespan: float):
-    pixels.clear()
+    pixels.fill((0, 0, 0))
     pixels.show()
     for i in range(len(pixels)):
         # tricky math! we use each pixel as a fraction of the full 96-color wheel

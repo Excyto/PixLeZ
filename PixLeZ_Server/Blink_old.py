@@ -57,7 +57,7 @@ class Blink(object):
     def stop(self):
         if self.process.is_alive():
             self.process.terminate()
-            pixels.clear()
+            pixels.fill((0, 0, 0))
             pixels.show()
             self.process = self.process = Process(target=self.run, args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber, ))
 
@@ -221,11 +221,11 @@ class Blink(object):
 
             # 1) Effect - Walking Pixels
             if self.effect == 1:
-                pixels.clear()
+                pixels.fill((0, 0, 0))
                 pixels.show()
                 for i in range(pixels.count()):
                     for j in reversed(range(i, pixels.count())):
-                        pixels.clear()
+                        pixels.fill((0, 0, 0))
                         for k in range(i):
                             pixels.set_pixel(k, self.color)
                             time.sleep(self.time)
@@ -234,11 +234,11 @@ class Blink(object):
                         time.sleep(self.time)
             # 2) Effect - Walking Pixels reverse
             if self.effect == 2:
-                pixels.clear()
+                pixels.fill((0, 0, 0))
                 pixels.show()
                 for i in range(pixels.count()):
                     for j in range(i, pixels.count()):
-                        pixels.clear()
+                        pixels.fill((0, 0, 0))
                         for k in range(i):
                             pixels.set_pixel(k, self.color)
                             time.sleep(self.time)
@@ -263,7 +263,7 @@ class Blink(object):
                     time.sleep(tmpTimer)
             # 5) Effect - Countdown Pixels
             if self.effect == 5:
-                pixels.clear()
+                pixels.fill((0, 0, 0))
                 pixels.show()
                 tmpTimer = self.timer / pixels.count()
                 for i in range(pixels.count()):
@@ -329,7 +329,7 @@ class Blink(object):
                         time.sleep(self.time)
             # 9) Effect - Walking Rainbow Pixels
             if self.effect == 9:
-                pixels.clear()
+                pixels.fill((0, 0, 0))
                 pixels.show()
                 for i in range(pixels.count()):
                     # tricky math! we use each pixel as a fraction of the full 96-color wheel
