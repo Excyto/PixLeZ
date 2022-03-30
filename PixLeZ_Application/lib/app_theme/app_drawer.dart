@@ -9,6 +9,8 @@ import 'package:PixLeZ/about.dart';
 import 'package:PixLeZ/help.dart';
 import 'package:PixLeZ/page_license.dart';
 
+import '../data/alarm.dart';
+
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -100,6 +102,21 @@ class AppDrawer extends StatelessWidget {
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                     builder: (BuildContext context) => ModesStarter())),
+          ),
+          Divider(),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                Icon(Icons.alarm),
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text('Light Alarm Clock'),
+                )
+              ],
+            ),
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => AlarmStarter())),
           ),
           Divider(),
           ListTile(
