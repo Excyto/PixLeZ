@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:PixLeZ/data/AlarmEntry.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -14,16 +17,35 @@ class AlarmStarter extends StatefulWidget {
 class _MyWidgetState extends State<AlarmStarter>
     with AutomaticKeepAliveClientMixin {
 
-  sendRequest(String res) async {
+  List<AlarmEntry> alarmEntries = List.empty();
+
+  getAlarms(String res) async {
     String url =
         Provider.of<StateNotifier>(context, listen: false).ip.toString() + res;
+    http.Response response;
     try {
-      await http.get(Uri.parse(url));
-      Provider.of<StateNotifier>(context, listen: false).setConnected(true);
+      response = await http.get(Uri.parse(url));
+      if (response.statusCode != 200) {
+        Provider.of<StateNotifier>(context, listen: false).setRunning(0);
+        Provider.of<StateNotifier>(context, listen: false).setConnected(false);
+      } else {
+        Provider.of<StateNotifier>(context, listen: false).setConnected(true);
+        final parsedJson = jsonDecode(response.body.toString());
+        final alarmEntries = AlarmEntry.listFromJson(parsedJson);
+        // TODO: How to reload UI?
+        return alarmEntries;
+      }
     } catch (e) {
       Provider.of<StateNotifier>(context, listen: false).setRunning(0);
       Provider.of<StateNotifier>(context, listen: false).setConnected(false);
+      return;
     }
+  }
+
+  @override
+  void initState() {
+    alarmEntries = getAlarms("/alarms");
+    super.initState();
   }
 
   @override
@@ -42,10 +64,27 @@ class _MyWidgetState extends State<AlarmStarter>
         ),
       ),
       drawer: AppDrawer(),
+      body: _myListView(),
       bottomNavigationBar: CustomBottomNavigator(),
     );
   }
 
+  Widget _myListView() {
+    return ListView.builder(
+      itemCount: alarmEntries.length,
+      itemBuilder: (context, index) {
+        var entry = alarmEntries[index];
+        return Card(
+          margin: EdgeInsets.all(10.0),
+          child: ListTile(
+            leading: Icon(Icons.alarm),
+            title: Text(entry.name),
+            subtitle: Text(entry.dayNames.toString()),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   bool get wantKeepAlive => true;

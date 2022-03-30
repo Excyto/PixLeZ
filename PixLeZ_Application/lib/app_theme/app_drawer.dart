@@ -9,7 +9,7 @@ import 'package:PixLeZ/about.dart';
 import 'package:PixLeZ/help.dart';
 import 'package:PixLeZ/page_license.dart';
 
-import '../data/alarm.dart';
+import '../alarm.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
