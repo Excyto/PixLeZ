@@ -1,0 +1,2 @@
+Flask~=2.1.0
+adafruit-circuitpython-ws2801~=0.10.9

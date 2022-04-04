@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import time
-
-import Adafruit_WS2801
+import typing
 
 from multiprocessing import Process
 from multiprocessing import Queue
@@ -23,10 +22,10 @@ class Blink(object):
 
     def __init__(self):
         self.value = 0
-        self.color = Adafruit_WS2801.RGB_to_color(255, 255, 255)
+        self.color = (255, 255, 255)
         self.colorList = []
         for i in range(Constants.PIXEL_COUNT):
-            self.colorList.append('000000')
+            self.colorList.append((0, 0, 0))
         self.time = 0.1
         self.timer = 20.0
         self.number = 1
@@ -50,13 +49,13 @@ class Blink(object):
     def stop(self):
         if self.process.is_alive():
             self.process.terminate()
-            pixels.clear()
+            pixels.fill((0, 0, 0))
             pixels.show()
             self.process = self.process = Process(target=self.run, args=(
                 self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
 
     def get_status(self):
-        col1 = self.color_to_RGB(self.color)
+        col1 = self.color
         col2 = self.RGB_to_hex(col1[0], col1[1], col1[2])
         retStr = "color=" + str(col2) + ";\ntime=" + str(self.time) + ";\ntimer=" + str(self.timer) \
                  + ";\nnumber=" + str(self.number) + ";\nmode=" + str(self.mode) + ";\neffect=" + str(self.effect) \
@@ -67,18 +66,18 @@ class Blink(object):
     # * Converts the RGB in different color schemes
     # * -----------
 
-    def RGB_to_color(self, r, g, b):
+    def RGB_to_color(self, r: int, g: int, b: int):
         return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF)
 
-    def color_to_RGB(self, color):
+    def color_to_RGB(self, color: int) -> typing.Tuple[int, int, int]:
         return (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF
 
-    def hex_to_RGB(self, hex):
+    def hex_to_RGB(self, hex: str) -> typing.Tuple[int, int, int]:
         hex = hex.lstrip('#')
         # print('RGB =', tuple(int(hex[i:i + 2], 16) for i in (0, 2, 4)))
         return tuple(int(hex[i:i + 2], 16) for i in (0, 2, 4))
 
-    def RGB_to_hex(self, r, g, b):
+    def RGB_to_hex(self, r: int, g: int, b: int) -> str:
         st = '{:02x}{:02x}{:02x}'.format(r, g, b)
         st = st.upper()
         return st
@@ -88,27 +87,27 @@ class Blink(object):
     # * -----------
 
     # value = Hex-String
-    # color = 28-Bit Int Value
+    # color = 28-Bit Int Value // No more, it is now a rgb tuple
     def set_color(self, value):
         if self.process.is_alive():
-            self.color = int(value, 16)
+            self.color = self.hex_to_RGB(value)
             self.queueColor.put(self.color)
 
             for i in range(Constants.PIXEL_COUNT):
-                self.colorList[i] = value
+                self.colorList[i] = self.hex_to_RGB(value)
             self.queueColorList.put(self.colorList)
         else:
-            self.color = int(value, 16)
+            self.color = self.hex_to_RGB(value)
             for i in range(Constants.PIXEL_COUNT):
-                self.colorList[i] = value
+                self.colorList[i] = self.hex_to_RGB(value)
 
     # colors = Hex-String list
     def set_pixels(self, colors):
         if self.process.is_alive():
-            self.colorList = colors
+            self.colorList = self.hex_to_RGB(colors)
             self.queueColorList.put(self.colorList)
         else:
-            self.colorList = colors
+            self.colorList = self.hex_to_RGB(colors)
 
     # Set time for changing in some Effects
     def set_time(self, value):
@@ -160,18 +159,18 @@ class Blink(object):
 
     def wheel(self, pos):
         if pos < 85:
-            return Adafruit_WS2801.RGB_to_color(pos * 3, 255 - pos * 3, 0)
+            return (pos * 3, 255 - pos * 3, 0)
         elif pos < 170:
             pos -= 85
-            return Adafruit_WS2801.RGB_to_color(255 - pos * 3, 0, pos * 3)
+            return (255 - pos * 3, 0, pos * 3)
         else:
             pos -= 170
-            return Adafruit_WS2801.RGB_to_color(0, pos * 3, 255 - pos * 3)
+            return (0, pos * 3, 255 - pos * 3)
 
-    # col := (r, g, b) - Tupel
+    # col := (r, g, b) - Tuple
     def road_map(self, *col):
         length = len(col)
-        part = int(pixels.count() / (len(col) - 1))
+        part = int(len(pixels) / (len(col) - 1))
         for i in range(0, len(col) - 1):
             difR = col[i + 1][0] - col[i][0]
             difG = col[i + 1][1] - col[i][1]
@@ -181,8 +180,7 @@ class Blink(object):
             difB = int(difB / part)
             # r, g, b = pixels.get_pixel_rgb(i)
             for j in range(part * i, part * (i + 1)):
-                pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color(
-                    col[i][0] + (j * difR), col[i][1] + (j * difG), col[i][2] + (j * difB)))
+                pixels[j] = (col[i][0] + (j * difR), col[i][1] + (j * difG), col[i][2] + (j * difB))
             pixels.show()
 
     # * -----------
@@ -204,13 +202,10 @@ class Blink(object):
 
     # new process -> communication with queue
     def run(self, queueColor, queueColorList, queueTime, queueNumber):
-        tmp = 0
-        # check Queue -> oefters abfragen!
-        t = Thread(target=self.checkQueue)
-        t.setDaemon(True)
+        # check Queue -> check more often!
+        t = Thread(target=self.checkQueue, daemon=True)
         t.start()
         while True:
-
             time.sleep(0.001)
 
             # * -----------
@@ -309,7 +304,7 @@ class Blink(object):
             # 0) Mode - On Pixels
             if self.mode == 0:
                 for i in range(len(self.colorList)):
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
+                    pixels[i] = self.colorList[i]
                 pixels.show()
             # 1) Mode - Chill Pixels
             if self.mode == 1:
@@ -317,7 +312,7 @@ class Blink(object):
             # 2) Mode - Custom Color Theme
             if self.mode == 2:
                 for i in range(len(self.colorList)):
-                    pixels.set_pixel(i, int(self.colorList[i], 16))
+                    pixels[i] = self.colorList[i]
                 pixels.show()
                 time.sleep(self.time)
                 # break
