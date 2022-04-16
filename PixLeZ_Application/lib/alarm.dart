@@ -31,9 +31,7 @@ class _MyWidgetState extends State<AlarmStarter>
       } else {
         Provider.of<StateNotifier>(context, listen: false).setConnected(true);
         final parsedJson = jsonDecode(response.body.toString());
-        final alarmEntries = AlarmEntry.listFromJson(parsedJson);
-        // TODO: How to reload UI?
-        return alarmEntries;
+        alarmEntries = AlarmEntry.listFromJson(parsedJson);
       }
     } catch (e) {
       Provider.of<StateNotifier>(context, listen: false).setRunning(0);
@@ -44,32 +42,33 @@ class _MyWidgetState extends State<AlarmStarter>
 
   @override
   void initState() {
-    alarmEntries = getAlarms("/alarms");
     super.initState();
+    getAlarms("/alarms");
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text('PixLeZ - Light Alarm Clock'),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.black, Colors.orange],
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text('PixLeZ - Light Alarm Clock'),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.black, Colors.orange],
+              ),
             ),
           ),
         ),
-      ),
-      drawer: AppDrawer(),
-      body: _myListView(),
-      bottomNavigationBar: CustomBottomNavigator(),
-    );
+        drawer: AppDrawer(),
+        body: _myListView(),
+        bottomNavigationBar: CustomBottomNavigator(),
+      );
   }
 
   Widget _myListView() {
+    if(alarmEntries.isNotEmpty){
     return ListView.builder(
       itemCount: alarmEntries.length,
       itemBuilder: (context, index) {
@@ -84,6 +83,15 @@ class _MyWidgetState extends State<AlarmStarter>
         );
       },
     );
+    }
+    else{
+      return ListView.builder(
+        itemCount: alarmEntries.length,
+        itemBuilder: (context, index) {
+          return Card();
+        },
+      );
+    }
   }
 
   @override
