@@ -96,7 +96,7 @@ packages:
       name: flutter_markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.9+1"
+    version: "0.6.10"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -148,7 +148,7 @@ packages:
       name: markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "5.0.0"
   matcher:
     dependency: transitive
     description:
@@ -261,6 +261,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.2"
+  rainbow_gradient:
+    dependency: "direct main"
+    description:
+      name: rainbow_gradient
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -279,14 +286,14 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.2+1"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.1+1"
   stack_trace:
     dependency: transitive
     description:
@@ -412,7 +419,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.1"
   xdg_directories:
     dependency: transitive
     description:

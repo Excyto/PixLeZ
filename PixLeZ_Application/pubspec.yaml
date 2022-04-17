@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
 # Change this in state_notifier.dart also!
-version: 2.3.5
+version: 2.3.6
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -29,9 +29,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.4
+  rainbow_gradient: ^0.0.1
   http: ^0.13.4
   provider: ^6.0.2
-  flutter_markdown: ^0.6.9+1
+  flutter_markdown: ^0.6.10
   sqflite: ^2.0.2
   url_launcher: ^6.0.20
   uuid: ^3.0.6
