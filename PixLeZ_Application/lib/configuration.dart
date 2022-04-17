@@ -98,9 +98,11 @@ class _MyWidgetState extends State<ConfigurationStarter>
         title: Text('PixLeZ - Controller'),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.black, Colors.orange],
-            ),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [Colors.redAccent, Colors.lightGreenAccent, Colors.lightBlueAccent]
+              )
           ),
         ),
       ),
@@ -205,7 +207,8 @@ class _MyWidgetState extends State<ConfigurationStarter>
             child: Row(
               children: [
                 SizedBox(
-                  width: 100,
+                  width: 150,
+                  height: 150,
                   child: Container(
                     margin: EdgeInsets.all(10.0),
                     padding: EdgeInsets.all(10.0),
@@ -279,7 +282,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 keyboardType: TextInputType.number,
                 controller: _numController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.polymer),
+                  prefixIcon: Icon(Icons.polymer, color: Colors.lightBlueAccent,),
                   labelText: 'Number in x',
                   border: OutlineInputBorder(),
                 ),
@@ -311,7 +314,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 controller: _timeController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.timelapse),
+                  prefixIcon: Icon(Icons.timelapse, color: Colors.lightBlueAccent,),
                   labelText: 'Time in sec',
                   border: OutlineInputBorder(),
                 ),
@@ -347,7 +350,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 controller: _timerController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.timer),
+                  prefixIcon: Icon(Icons.timer, color: Colors.lightBlueAccent,),
                   labelText: 'Timer in sec',
                   border: OutlineInputBorder(),
                 ),
