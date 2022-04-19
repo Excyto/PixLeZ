@@ -155,7 +155,7 @@ class _MyWidgetState extends State<EffectsStarter>
             trailing: Consumer<StateNotifier>(
               builder: (context, stateN, child) => Icon(
                 stateN.effect == index ? Icons.pets : null,
-                color: Colors.redAccent,
+                color: Colors.greenAccent,
               ),
             ),
             onTap: () {

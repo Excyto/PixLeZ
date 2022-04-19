@@ -84,7 +84,7 @@ class _MyWidgetState extends State<ModesStarter>
             trailing: Consumer<StateNotifier>(
               builder: (context, stateN, child) => Icon(
                 stateN.mode == index ? Icons.pets : null,
-                color: Colors.redAccent,
+                color: Colors.greenAccent,
               ),
             ),
             onTap: () {
