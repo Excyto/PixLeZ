@@ -53,9 +53,11 @@ class _MyWidgetState extends State<ModesStarter>
         title: Text('PixLeZ - Modes'),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.black, Colors.orange],
-            ),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [Colors.redAccent, Colors.lightGreenAccent, Colors.lightBlueAccent]
+              )
           ),
         ),
       ),
@@ -76,12 +78,13 @@ class _MyWidgetState extends State<ModesStarter>
         return Card(
           margin: EdgeInsets.all(10.0),
           child: ListTile(
-            leading: Icon(itemIcon),
+            leading: Icon(itemIcon, color: Colors.lightBlueAccent,),
             title: Text(itemTitle),
             subtitle: Text(itemDesc),
             trailing: Consumer<StateNotifier>(
               builder: (context, stateN, child) => Icon(
                 stateN.mode == index ? Icons.pets : null,
+                color: Colors.greenAccent,
               ),
             ),
             onTap: () {

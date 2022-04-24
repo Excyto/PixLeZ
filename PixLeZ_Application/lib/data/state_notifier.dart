@@ -13,7 +13,7 @@ class StateNotifier extends ChangeNotifier {
   bool connected = false;
   int mode = -1;
   int effect = -1;
-  String version = 'v2.3.5';  // Change this in pubspec.yaml also!
+  String version = 'v2.3.6';  // Change this in pubspec.yaml also!
   String about;
 
   // Color Theme Configuration

@@ -40,9 +40,11 @@ class _MyWidgetState extends State<SettingsStarter>
         title: Text('PixLeZ - Settings'),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.black, Colors.orange],
-            ),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [Colors.redAccent, Colors.lightGreenAccent, Colors.lightBlueAccent]
+              )
           ),
         ),
       ),
@@ -58,7 +60,7 @@ class _MyWidgetState extends State<SettingsStarter>
               child: TextField(
                 controller: _ipController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.airplay),
+                  prefixIcon: Icon(Icons.airplay, color: Colors.lightBlueAccent,),
                   labelText: 'Ip-Address',
                   border: OutlineInputBorder(),
                 ),
@@ -82,7 +84,7 @@ class _MyWidgetState extends State<SettingsStarter>
                 keyboardType: TextInputType.number,
                 controller: _pixelCountController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.adjust),
+                  prefixIcon: Icon(Icons.adjust, color: Colors.lightBlueAccent,),
                   labelText: 'Max Pixel',
                   border: OutlineInputBorder(),
                 ),

@@ -22,9 +22,11 @@ class _LicenseStarterState extends State<LicenseStarter>
         title: Text('PixLeZ - License'),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.black, Colors.orange],
-            ),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [Colors.redAccent, Colors.lightGreenAccent, Colors.lightBlueAccent]
+              )
           ),
         ),
       ),

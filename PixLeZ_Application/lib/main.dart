@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:PixLeZ/data/state_notifier.dart';
@@ -36,9 +35,9 @@ class _HomePageState extends State<HomePage> {
       title: 'PixLeZ',
       theme: ThemeData(),
       darkTheme: ThemeData.dark().copyWith(
-        bottomAppBarColor: Colors.orange,
-        indicatorColor: Colors.orange,
-        scaffoldBackgroundColor: Colors.grey[700], colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.orange),
+        bottomAppBarColor: Colors.orangeAccent,
+        indicatorColor: Colors.orangeAccent,
+        scaffoldBackgroundColor: Colors.grey[700], colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.orangeAccent),
       ),
       home: Scaffold(
         // https://stackoverflow.com/questions/46551268/when-the-keyboard-appears-the-flutter-widgets-resize-how-to-prevent-this

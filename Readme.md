@@ -1,6 +1,6 @@
 # PixLeZ - Documentation
 
-[![alt text](https://img.shields.io/github/followers/Excyto?label=Github&style=social)](https://github.com/Excyto)
+[![alt text](https://img.shields.io/github/stars/Excyto/PixLeZ?style=social)](https://github.com/Excyto/PixLeZ)
 [![alt text](https://img.shields.io/github/v/release/Excyto/PixLeZ?color=g)](https://github.com/Excyto/PixLeZ)
 [![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/Excyto/PixLeZ/blob/master/LICENSE)
 [![GitHub version](https://img.shields.io/badge/Open-Source-brightgreen)](https://github.com/Excyto/PixLeZ)
@@ -9,10 +9,13 @@
 [![GitHub version](https://img.shields.io/badge/Server-Python-brightgreen)](https://github.com/Excyto/PixLeZ)
 [![GitHub version](https://img.shields.io/badge/Client-C%23%20%7C%20Flutter-brightgreen)](https://github.com/Excyto/PixLeZ)
 
+[![alt text](https://img.shields.io/github/followers/Excyto?label=Excyto&style=social)](https://github.com/Excyto)
+[![alt text](https://img.shields.io/github/followers/TheRisenPhoenix?label=TheRisenPhoenix&style=social)](https://github.com/TheRisenPhoenix)
+
 ## Introduction
 
-PixLeZ is a Software-Bundle for controlling the [WS2801 Pixels](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) with a Raspberry Pi.  
-The Bundle contains a server application, running on the Raspberry Pi and different clients for control the server.
+PixLeZ is a Software-Bundle for controlling the [WS2801 Pixels](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) with a Raspberry Pi.  
+The Bundle contains a server application, running on the Raspberry Pi and different clients to control the server.
 
 ## Content
 
@@ -37,21 +40,15 @@ For the Hardware part, follow the descriptions bellow.
 - [Raspberry Pi Tutorial Setup (ger)](https://tutorials-raspberrypi.de/raspberry-pi-ws2801-rgb-led-streifen-anschliessen-steuern/)
 - [Raspberry Pi Tutorial Setup (en)](https://tutorials-raspberrypi.com/how-to-control-a-raspberry-pi-ws2801-rgb-led-strip/)
 
-There is a picture of my personal setup.
-
-- TODO: Bild hier einfuegen
-
 ### Software
 
 For the software part you have to install some `python` libraries with the following commands.
 
 ```sh
 sudo apt-get update
-sudo apt-get install python[Version]
+sudo apt-get install python3
 sudo apt-get install python-pip -y
-sudo pip install RPi.GPIO
-sudo pip install Adafruit-GPIO
-sudo pip install adafruit-ws2801
+sudo pip install adafruit-circuitpython-ws2801
 sudo pip install flask
 ```
 
@@ -59,7 +56,7 @@ sudo pip install flask
 
 > Path: `./PixLeZ_Server`
 
-The base of the application is a simple flask server running with python, controlling your [WS2801 Pixels](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py). After the configuration of your Raspberry Pi with the packages in the Software part, you need to move the `./PixLeZ_Server` directory to your Raspberry Pi. After that, you can simply run the server inside the directory using the following command.
+The base of the application is a simple flask server running with python, controlling your [WS2801 Pixels](https://github.com/adafruit/Adafruit_CircuitPython_WS2801). After the configuration of your Raspberry Pi with the packages in the Software part, you need to move the `./PixLeZ_Server` directory to your Raspberry Pi. After that, you can simply run the server inside the directory using the following command.
 
 ```sh
 python app.py
@@ -168,7 +165,7 @@ The following tables describes the different effects and modes which can be used
 You are able to add your own effects and modes to the PixLeZ-Package. Feel free to share your code with me and I will extend the PixLeZ-Package with your features.  
 
 Add your code in `Blink.py` under the last effect or mode, depending on your purpose. Just add an further `if-condition` with an unique `index`.  
-Use the [adafruit-ws2801 API](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) to expand the code.
+Use the [adafruit-ws2801 API](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) to expand the code.
 
 ```python
 if self.effect == [unique effect Number]:
@@ -216,28 +213,30 @@ You have two options to run the PixLeZ-Application
 
 > Path: `./PixLeZ_Simulator`
 
-The PixLeZ-Simulator is developed for simulating, debuging and testing your program without using hardware. It is using the same [API](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much.
+The PixLeZ-Simulator is developed for simulating, debuging and testing your program without using hardware. It is using the same [API](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much.
 
 For more Information please check the Simulator `Readme.md` in `./PixLeZ_Simulator/Readme.md`.
 
 ## About
 
-PixLeZ is created by Tobias Schreiweis in 2020.  
+PixLeZ was originally created by [Tobias Schreiweis](https://github.com/Excyto) in 2020.  
+Later, [Timo](https://github.com/TheRisenPhoenix) joined as a maintainer and contributor.
 
-It started as a private project with the main focus to improve my python skills with the Raspberry Pi and learning new programing languages like dart with the framework flutter. After some request from other peoples getting the application I decided to publish it on GitHub.
+It started as a private project with the main focus to improve their python skills with the Raspberry Pi and learning new programing languages like dart with the framework flutter. After some requests from other people getting the application Tobias decided to publish it on GitHub.
 
-You are welcome to extend the PixLeZ-Bundle or send me your ideas and I would be glad about adding your code and ideas to this repository.
+You are welcome to extend the PixLeZ-Bundle or send us your ideas and we will be glad to add your code and ideas to this repository.
 
-If I can be of assistance, please do not hesitate to contact me.
+If we can be of assistance, please do not hesitate to contact us.
 
-[![alt text](https://img.shields.io/github/followers/Excyto?label=Github&style=social)](https://github.com/Excyto)
+[![alt text](https://img.shields.io/github/followers/Excyto?label=Excyto&style=social)](https://github.com/Excyto)
+[![alt text](https://img.shields.io/github/followers/TheRisenPhoenix?label=TheRisenPhoenix&style=social)](https://github.com/TheRisenPhoenix)
 
 ## Links
 
 - [Raspberry Pi Tutorial Setup (ger)](https://tutorials-raspberrypi.de/raspberry-pi-ws2801-rgb-led-streifen-anschliessen-steuern/)
 - [Raspberry Pi Tutorial Setup (en)](https://tutorials-raspberrypi.com/how-to-control-a-raspberry-pi-ws2801-rgb-led-strip/)
-- [Adafruit_WS2801 Library GitHub](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py)
+- [Adafruit_WS2801 Library GitHub](https://github.com/adafruit/Adafruit_CircuitPython_WS2801)
 - [Inspiration of some Arduino LED effects](https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/)
-- [Flask Framework](https://flask.palletsprojects.com/en/1.1.x/)
+- [Flask Framework](https://flask.palletsprojects.com)
 - [Tkinter Framework](https://realpython.com/python-gui-tkinter/)
 - [Flutter](https://flutter.dev/)

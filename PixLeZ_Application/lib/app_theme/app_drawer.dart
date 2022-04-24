@@ -8,6 +8,7 @@ import 'package:PixLeZ/color_theme_config.dart';
 import 'package:PixLeZ/about.dart';
 import 'package:PixLeZ/help.dart';
 import 'package:PixLeZ/page_license.dart';
+import 'package:rainbow_gradient/rainbow_gradient.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -20,11 +21,11 @@ class AppDrawer extends StatelessWidget {
             margin: EdgeInsets.zero,
             padding: EdgeInsets.zero,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.orange, Colors.black],
-              ),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [Colors.redAccent, Colors.lightGreenAccent, Colors.lightBlueAccent]
+                )
             ),
             child: Stack(
               children: <Widget>[

@@ -22,9 +22,11 @@ class _AboutStarterState extends State<AboutStarter>
         title: Text('PixLeZ - About'),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.black, Colors.orange],
-            ),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [Colors.redAccent, Colors.lightGreenAccent, Colors.lightBlueAccent]
+              )
           ),
         ),
       ),
