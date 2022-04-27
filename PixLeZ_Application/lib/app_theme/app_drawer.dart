@@ -31,15 +31,20 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 Positioned(
                   bottom: 12.0,
-                  left: 16.0,
+                  left: 55.0,
                   child: Text(
-                    "PixLeZ",
+                    "ixLeZ",
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20.0,
+                        fontSize: 35.0,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
+                Positioned(
+                  bottom:20,
+                  left:16,
+                  child: Image.asset('lib/assets/icon/icon_fit.png', width: 50, height: 50,)
+                )
               ],
             ),
           ),
