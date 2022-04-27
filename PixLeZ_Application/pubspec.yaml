@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
 # Change this in state_notifier.dart also!
-version: 2.3.6
+version: 2.3.7
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
