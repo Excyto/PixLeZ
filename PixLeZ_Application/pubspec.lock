@@ -289,13 +289,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.2"
-  rainbow_gradient:
-    dependency: "direct main"
-    description:
-      name: rainbow_gradient
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -8,7 +8,6 @@ import 'package:PixLeZ/color_theme_config.dart';
 import 'package:PixLeZ/about.dart';
 import 'package:PixLeZ/help.dart';
 import 'package:PixLeZ/page_license.dart';
-import 'package:rainbow_gradient/rainbow_gradient.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -157,7 +156,7 @@ class AppDrawer extends StatelessWidget {
                 Icon(Icons.receipt_long_rounded),
                 Padding(
                   padding: EdgeInsets.only(left: 8.0),
-                  child: Text('License'),
+                  child: Text('Licenses'),
                 )
               ],
             ),
