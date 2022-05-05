@@ -9,7 +9,7 @@
 
 ## PixLeZ-Simulator
 
-The PixLeZ-Simulator is developed for simulating, debuging and testing the Adafruit_WS2801 pixels without using the hardware. It is using the same [API](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much. Only the call of the converter methods have to be adjust.
+The PixLeZ-Simulator is developed for simulating, debuging and testing the Adafruit_WS2801 pixels without using the hardware. It is using the same [API](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much. Only the call of the converter methods have to be adjust.
 
 You can run your own code in `PixelSimulatorConfig.py`. There is the method `coding()` for this purpose, which will be executed in a while loop. The possibilities of manipulating the pixels are listed in the section below.
 
@@ -77,5 +77,5 @@ RGB_to_hex(self, r, g, b)
 
 ## Links
 
-- [Adafruit_WS2801 Library GitHub](https://github.com/adafruit/Adafruit_Python_WS2801/blob/master/Adafruit_WS2801/WS2801.py)
+- [Adafruit_WS2801 Library GitHub](https://github.com/adafruit/Adafruit_CircuitPython_WS2801)
 - [Tkinter Framework](https://realpython.com/python-gui-tkinter/)
