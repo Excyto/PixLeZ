@@ -25,9 +25,7 @@ The Bundle contains a server application, running on the Raspberry Pi and differ
   - Effects and Modes
   - Own Effects and Modes
   - Example: Use the API
-- PixLeZ-Desktop application for Windows, developed  with `C#`
 - PixLeZ-Application, a cross platform app, developed with `flutter`
-- PixLeZ-Simulator, developed with `Python`
 - About
 - Links
 
@@ -191,14 +189,6 @@ How to start an effect and manipulate it. If you use an application do the same 
 1. You can manipulate the effect with setting different attributes during runtime. As example `/set/color/AA0011` or `/set/time/0.001`
 1. Select an other effect during runtime with `/select/effect/16`
 
-## PixLeZ-Desktop
-
-> Path: `./PixLeZ_Desktop`
-
-PixLeZ-Desktop is developed for easy controlling the pixels via windows desktop. It is developed in `C#` with Visual Studio. The main use of this programm is to debug and test the application.
-
-Use PixLeZ-Application developed with `flutter` instead of PixLeZ_Desktop for a better user experience.
-
 ## PixLeZ-Application
 
 > Path: `./PixLeZ_Application`
@@ -211,14 +201,6 @@ You have two options to run the PixLeZ-Application
 
 1. Set up a [Flutter environment](https://flutter.dev/docs/get-started/install) and compile it on your specific platform (Web, Android, IOS, Mac, Win,...)
 2. Download the predefined installation packages and install it on the specific platform
-
-## PixLeZ-Simulator
-
-> Path: `./PixLeZ_Simulator`
-
-The PixLeZ-Simulator is developed for simulating, debuging and testing your program without using hardware. It is using the same [API](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much.
-
-For more Information please check the Simulator `Readme.md` in `./PixLeZ_Simulator/Readme.md`.
 
 ## About
 
