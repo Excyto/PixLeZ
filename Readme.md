@@ -25,9 +25,7 @@ The Bundle contains a server application, running on the Raspberry Pi and differ
   - Effects and Modes
   - Own Effects and Modes
   - Example: Use the API
-- PixLeZ-Desktop application for Windows, developed  with `C#`
 - PixLeZ-Application, a cross platform app, developed with `flutter`
-- PixLeZ-Simulator, developed with `Python`
 - About
 - Links
 
@@ -129,11 +127,11 @@ The following tables describes the different effects and modes which can be used
 |---------|---------|---------|---------|
 |-1    |Init                    |No Effect active| |
 |0     |Shine                   |Switching all Pixels on |c|
-|1     |Walking Pixels          |Pixels walking to one side|c, t, n|
-|2     |Walking Pixels reverse  |Pixels walking to the other side|c, t, n|
+|1     |Walking Pixels          |Pixels walking to one side|c, t|
+|2     |Walking Pixels reverse  |Pixels walking to the other side|c, t|
 |3     |Fill it                 |Insort the selected number of Pixels|c, n|
-|4     |Get empty               |And the Pixels are going away|c, tr, n|
-|5     |Final countdown         |Countdown with red Pixels|c, tr|
+|4     |Get empty               |And the Pixels are going away|c, tr|
+|5     |Final countdown         |Countdown with red Pixels|tr|
 |6     |Pulsing Pixels          |Pulsating Pixels everywhere|c, t|
 |7     |Dim Off                 |Dim the Pixels off|c, tr|
 |8     |Rainbow Mode            |The Pixels change in the Spectrum of the Rainbow|t|
@@ -162,10 +160,9 @@ The following tables describes the different effects and modes which can be used
 
 ### Add your own Effects and Modes
 
-You are able to add your own effects and modes to the PixLeZ-Package. Feel free to share your code with me and I will extend the PixLeZ-Package with your features.  
+You are able to add your own effects and modes to the PixLeZ-Package. Feel free to share your code with me and I will extend the PixLeZ-Package with your features or simply create a Pull Request.  
 
 Add your code in `Blink.py` under the last effect or mode, depending on your purpose. Just add an further `if-condition` with an unique `index`.  
-Use the [adafruit-ws2801 API](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) to expand the code.
 
 ```python
 if self.effect == [unique effect Number]:
@@ -174,27 +171,23 @@ if self.mode == [unique mode Numer]:
   # insert your code here
 ```
 
+Implement the logic of the effect in `Effects.py`.
+Use the [adafruit-ws2801 API](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) to expand the code.
+
 After adding, you are able to call the effects and modes with an simple flask API call or an application.  
 
-You are not able to select your added effects and modes with the PixLeZ-Application. For this purpose expand the further code by your own or send me your effects and modes and i will expand it.
+You are not able to select your added effects and modes with the PixLeZ-Application. You'll have to add it to the App by hand. 
+We are aware of this issue and will think of a better solution in an upcoming iteration.
 
 ### Example: Use the API
 
-How to start an effect and manipulate it. If u use an application do the same steps but without the API calls.
+How to start an effect and manipulate it. If you use an application do the same steps but without the API calls.
 
 1. Select a color or color theme with `/set/color/<string:color>` or `/set/pixels`
 1. Select your effect with `/select/effect/1`
 1. Use `/start` to start the application
 1. You can manipulate the effect with setting different attributes during runtime. As example `/set/color/AA0011` or `/set/time/0.001`
 1. Select an other effect during runtime with `/select/effect/16`
-
-## PixLeZ-Desktop
-
-> Path: `./PixLeZ_Desktop`
-
-PixLeZ-Desktop is developed for easy controlling the pixels via windows desktop. It is developed in `C#` with Visual Studio. The main use of this programm is to debug and test the application.
-
-Use PixLeZ-Application developed with `flutter` instead of PixLeZ_Desktop for a better user experience.
 
 ## PixLeZ-Application
 
@@ -208,14 +201,6 @@ You have two options to run the PixLeZ-Application
 
 1. Set up a [Flutter environment](https://flutter.dev/docs/get-started/install) and compile it on your specific platform (Web, Android, IOS, Mac, Win,...)
 2. Download the predefined installation packages and install it on the specific platform
-
-## PixLeZ-Simulator
-
-> Path: `./PixLeZ_Simulator`
-
-The PixLeZ-Simulator is developed for simulating, debuging and testing your program without using hardware. It is using the same [API](https://github.com/adafruit/Adafruit_CircuitPython_WS2801) for manipulating the pixels, so it is possible to copy and paste the code between the simulator and the hardware without changing too much.
-
-For more Information please check the Simulator `Readme.md` in `./PixLeZ_Simulator/Readme.md`.
 
 ## About
 
