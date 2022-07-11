@@ -213,6 +213,8 @@ You are welcome to extend the PixLeZ-Bundle or send us your ideas and we will be
 
 If we can be of assistance, please do not hesitate to contact us.
 
+We first released this repo to public in mid 2022.
+
 [![alt text](https://img.shields.io/github/followers/Excyto?label=Excyto&style=social)](https://github.com/Excyto)
 [![alt text](https://img.shields.io/github/followers/TheRisenPhoenix?label=TheRisenPhoenix&style=social)](https://github.com/TheRisenPhoenix)
 
