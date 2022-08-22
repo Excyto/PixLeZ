@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-
-from flask import Flask, request
+from flask import Flask, request, escape
 from Blink import Blink
 
 '''
@@ -31,42 +30,42 @@ def stop():
 @app.route("/set/color/<string:color>")
 def flask_set_color(color):
     blink.set_color(color)
-    return str("Color set to: " + str(color))
+    return str("Color set to: " + escape(str(color)))
 
 
 # time as floating number
 @app.route('/set/time/<float:post_id>')
 def flask_set_time(post_id):
     blink.set_time(post_id)
-    return 'Time set to %f' % post_id
+    return escape('Time set to %f' % post_id)
 
 
 # timer as floating number
 @app.route('/set/timer/<float:post_id>')
 def flask_set_timer(post_id):
     blink.set_timer(post_id)
-    return 'Timer set to %f' % post_id
+    return escape('Timer set to %f' % post_id)
 
 
 # number as integer
 @app.route('/set/number/<int:post_id>')
 def flask_set_number(post_id):
     blink.set_number(post_id)
-    return 'Number set to %d' % post_id
+    return escape('Number set to %d' % post_id)
 
 
 # mode as integer
 @app.route('/select/mode/<string:post_id>')
 def flask_select_mode(post_id):
     blink.select_mode(int(post_id))
-    return 'Mode %d selected' % int(post_id)
+    return escape('Mode %d selected' % int(post_id))
 
 
 # effect as integer
 @app.route('/select/effect/<string:post_id>')
 def flask_select_effect(post_id):
     blink.select_effect(int(post_id))
-    return 'Effect %d selected' % int(post_id)
+    return escape('Effect %d selected' % int(post_id))
 
 
 # returns the status of the attributes
@@ -97,7 +96,4 @@ def flask_set_pixels():
 # ! doc: https://flask.palletsprojects.com/en/1.1.x/api/?highlight=run#flask.Flask.run
 if __name__ == '__main__':
     # Application:
-    app.run(debug=True, port=8080, host="0.0.0.0")
-
-    # Debug:
-    # app.run(debug=True, port=5500)
+    app.run(port=8080, host="0.0.0.0")

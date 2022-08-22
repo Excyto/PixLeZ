@@ -45,10 +45,12 @@ For the software part you have to install some `python` libraries with the follo
 ```sh
 sudo apt-get update
 sudo apt-get install python3
-sudo apt-get install python-pip -y
-sudo pip install adafruit-circuitpython-ws2801
-sudo pip install flask
+sudo apt-get install python3-pip -y
 ```
+
+Navigate inside your `PixLeZ_Server` directory using `cd`.
+Then install the needed requirements:
+`pip install -r requirements.txt`
 
 ## PixLeZ-Server
 
@@ -63,7 +65,7 @@ python app.py
 The PixLeZ-Server is now accessible via the local network. For [configuration](https://flask.palletsprojects.com/en/1.1.x/api/?highlight=run#flask.Flask.run) changes modify the statement below in the file `app.py` and restart the application `app.py` after.
 
 ```python
-app.run(debug=True, port=8080, host="0.0.0.0")
+app.run(port=8080, host="0.0.0.0")
 ```
 
 ### API calls
