@@ -50,7 +50,9 @@ sudo apt-get install python3-pip -y
 
 Navigate inside your `PixLeZ_Server` directory using `cd`.
 Then install the needed requirements:
-`pip install -r requirements.txt`
+```sh
+pip install -r requirements.txt
+```
 
 ## PixLeZ-Server
 
