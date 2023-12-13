@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-from flask import Flask, request, escape
+from flask import Flask, request
+from markupsafe import escape
+
 from Blink import Blink
 
 '''
