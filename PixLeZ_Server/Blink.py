@@ -25,7 +25,7 @@ class Blink(object):
         self.color = (255, 255, 255)
         self.colorList = []
         for i in range(Constants.PIXEL_COUNT):
-            self.colorList.append((0, 0, 0))
+            self.colorList.append((255, 255, 255))
         self.time = 0.1
         self.timer = 20.0
         self.number = 1
