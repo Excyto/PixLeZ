@@ -35,6 +35,7 @@ class Blink(object):
         self.queueColorList = Queue()
         self.queueTime = Queue()
         self.queueNumber = Queue()
+        self.repaintRequired = True
         self.process = Process(target=self.run,
                                args=(self.queueColor, self.queueColorList, self.queueTime, self.queueNumber,))
 
@@ -192,12 +193,16 @@ class Blink(object):
         while True:
             if not self.queueColor.empty():
                 self.color = self.queueColor.get()
+                self.repaintRequired = True
             if not self.queueColorList.empty():
                 self.colorList = self.queueColorList.get()
+                self.repaintRequired = True
             if not self.queueTime.empty():
                 self.time = self.queueTime.get()
+                self.repaintRequired = True
             if not self.queueNumber.empty():
                 self.number = self.queueNumber.get()
+                self.repaintRequired = True
             time.sleep(1)
 
     # new process -> communication with queue
@@ -207,6 +212,11 @@ class Blink(object):
         t.start()
         while True:
             time.sleep(0.001)
+            if not self.repaintRequired:
+                continue
+
+            # This might by overwritten by all effects that repeat
+            self.repaintRequired = False
 
             # * -----------
             # * Effects
@@ -219,10 +229,12 @@ class Blink(object):
             # 1) Effect - Walking Pixels
             if self.effect == 1:
                 Effects.walkingPixels(self.colorList, self.time, False)
+                self.repaintRequired = True
 
             # 2) Effect - Walking Pixels reverse
             if self.effect == 2:
                 Effects.walkingPixels(self.colorList, self.time, True)
+                self.repaintRequired = True
 
             # 3) Effect - Fill number Pixels
             if self.effect == 3:
@@ -239,6 +251,7 @@ class Blink(object):
             # 6) Effect - Pulsing Pixels
             if self.effect == 6:
                 Effects.pulsing(self.color, self.time)
+                self.repaintRequired = True
 
             # 7) Effect - Dim-off Pixels
             if self.effect == 7:
@@ -247,55 +260,68 @@ class Blink(object):
             # 8) Effect - Rainbow Pixels (Static color changing)
             if self.effect == 8:
                 Effects.rainbow(self, self.time)
+                self.repaintRequired = True
 
             # 9) Effect - Walking Rainbow Pixels
             if self.effect == 9:
                 Effects.rainbowWalking(self, self.time)
+                self.repaintRequired = True
 
             # 10) Effect - Pulsing Rainbow Pixels
             if self.effect == 10:
                 Effects.rainbowPulsing(self, self.time)
+                self.repaintRequired = True
 
             # -------------- NO DOKU -----------------
             # 11) Effect - Cyclon Pixels
             if self.effect == 11:
                 Effects.cyclon(self.colorList, self.number, self.time)
+                self.repaintRequired = True
 
             # 12) Effect - Twinkle Pixels
             if self.effect == 12:
                 Effects.twinkle(self.color, self.time)
+                self.repaintRequired = True
 
             # 13) Effect - Twinkle Random Pixels
             if self.effect == 13:
                 Effects.twinkleRandomColor(self.time)
+                self.repaintRequired = True
 
             # 14) Effect - Sparkle Pixels
             if self.effect == 14:
                 Effects.sparkle(self.colorList, self.time)
+                self.repaintRequired = True
 
             # 15) Effect - Snow Sparkle Pixels
             if self.effect == 15:
                 Effects.sparkleSnow(self.colorList, self.time)
+                self.repaintRequired = True
 
             # 16) Effect - Running Pixels
             if self.effect == 16:
                 Effects.running(self.color, self.time)
+                self.repaintRequired = True
 
             # 17) Effect - Theater chase Pixels
             if self.effect == 17:
                 Effects.theaterChase(self.colorList, self.time)
+                self.repaintRequired = True
 
             # 18) Effect - Center bounce Pixels
             if self.effect == 18:
                 Effects.centerBounce(self.colorList, self.number, self.time)
+                self.repaintRequired = True
 
             # 22) Effect - Fire Pixels
             if self.effect == 67:
                 Effects.fire(self.time)
+                self.repaintRequired = True
 
             # 23) Effect - Meteor Pixels
             if self.effect == 68:
                 Effects.meteor(self.color, self.number, self.time)
+                self.repaintRequired = True
 
             # * -----------
             # * Modes
