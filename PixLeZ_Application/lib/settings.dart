@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import 'package:PixLeZ/data/state_notifier.dart';
+import 'package:pixlez/data/state_notifier.dart';
 
-import 'package:PixLeZ/app_theme/bottom_navigator.dart';
-import 'package:PixLeZ/app_theme/app_drawer.dart';
+import 'package:pixlez/app_theme/bottom_navigator.dart';
+import 'package:pixlez/app_theme/app_drawer.dart';
 
 class SettingsStarter extends StatefulWidget {
+  const SettingsStarter({super.key});
+
+  @override
   _MyWidgetState createState() => _MyWidgetState();
 }
 
@@ -28,18 +31,18 @@ class _MyWidgetState extends State<SettingsStarter>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var _ipController = new TextEditingController(
+    var ipController = TextEditingController(
         text: Provider.of<StateNotifier>(context, listen: false).ip);
-    var _pixelCountController = new TextEditingController(
+    var pixelCountController = TextEditingController(
         text: Provider.of<StateNotifier>(context, listen: false)
             .maxPixel
             .toString());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('PixLeZ - Settings'),
+        title: const Text('PixLeZ - Settings'),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
@@ -48,7 +51,7 @@ class _MyWidgetState extends State<SettingsStarter>
           ),
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,10 +59,10 @@ class _MyWidgetState extends State<SettingsStarter>
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: TextField(
-                controller: _ipController,
-                decoration: InputDecoration(
+                controller: ipController,
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.airplay, color: Colors.lightBlueAccent,),
                   labelText: 'Ip-Address',
                   border: OutlineInputBorder(),
@@ -79,11 +82,11 @@ class _MyWidgetState extends State<SettingsStarter>
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: TextField(
                 keyboardType: TextInputType.number,
-                controller: _pixelCountController,
-                decoration: InputDecoration(
+                controller: pixelCountController,
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.adjust, color: Colors.lightBlueAccent,),
                   labelText: 'Max Pixel',
                   border: OutlineInputBorder(),
@@ -96,7 +99,7 @@ class _MyWidgetState extends State<SettingsStarter>
                       Provider.of<StateNotifier>(context, listen: false)
                           .setMaxPixel(int.parse(text));
                     } on FormatException {
-                      final snackBar =
+                      const snackBar =
                           SnackBar(content: Text('Invalid Pixel input.'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
@@ -105,12 +108,12 @@ class _MyWidgetState extends State<SettingsStarter>
               ),
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 7,
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigator(),
+      bottomNavigationBar: const CustomBottomNavigator(),
     );
   }
 

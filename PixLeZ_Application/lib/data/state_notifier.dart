@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
-import 'package:PixLeZ/data/color_theme.dart';
+import 'package:pixlez/data/color_theme.dart';
 
 class StateNotifier extends ChangeNotifier {
   String ip = 'http://127.0.0.1:5500';
@@ -13,22 +13,16 @@ class StateNotifier extends ChangeNotifier {
   bool connected = false;
   int mode = -1;
   int effect = -1;
-  String version = 'v2.3.7';  // Change this in pubspec.yaml also!
-  String about;
+  String version = 'v2.3.8';  // Change this in pubspec.yaml also!
+  late String about;
 
   // Color Theme Configuration
-  ColThemeConfiguration activConfig;
+  ColThemeConfiguration? activeConfig;
   List<ColThemeConfiguration> configList = [];
   int selectedConfig = -1;
 
   StateNotifier() {
-    about = 'PixLeZ - Application' +
-        '\nVersion: ' +
-        this.version +
-        '\n\nCreated by Tobias Schreiweis in 2020 ' +
-        '\n\nPixLeZ is used controlling Pixels on a Raspberry Pi.' +
-        '\nFor more information read the documentation.' +
-        '\n\nLicense: tbd';
+    about = 'PixLeZ - Application\nVersion: $version\n\nCreated by Tobias Schreiweis in 2020 \n\nPixLeZ is used controlling Pixels on a Raspberry Pi.\nFor more information read the documentation.\n\nLicense: tbd';
     loadDatabase();
   }
 
@@ -37,16 +31,12 @@ class StateNotifier extends ChangeNotifier {
     var box = Hive.box('settings');
     String tmpIp = box.get('ipAdr');
     int tmpPix = box.get('maxPix');
-    if (tmpIp != null) {
-      this.ip = tmpIp;
+    ip = tmpIp;
+      maxPixel = tmpPix;
     }
-    if (tmpPix != null) {
-      this.maxPixel = tmpPix;
-    }
-  }
 
-  void setActivConfig(ColThemeConfiguration colThemeConfiguration) {
-    activConfig = colThemeConfiguration;
+  void setActiveConfig(ColThemeConfiguration colThemeConfiguration) {
+    activeConfig = colThemeConfiguration;
     // notifyListeners();
   }
 
@@ -64,7 +54,7 @@ class StateNotifier extends ChangeNotifier {
   }
 
   void setSelectedConfig(int value) {
-    this.selectedConfig = value;
+    selectedConfig = value;
     notifyListeners();
   }
 

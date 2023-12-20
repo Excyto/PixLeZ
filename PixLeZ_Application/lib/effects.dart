@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import 'package:PixLeZ/data/state_notifier.dart';
+import 'package:pixlez/data/state_notifier.dart';
 
-import 'package:PixLeZ/app_theme/bottom_navigator.dart';
-import 'package:PixLeZ/app_theme/app_drawer.dart';
+import 'package:pixlez/app_theme/bottom_navigator.dart';
+import 'package:pixlez/app_theme/app_drawer.dart';
 
 class EffectsStarter extends StatefulWidget {
+  const EffectsStarter({super.key});
+
+  @override
   _MyWidgetState createState() => _MyWidgetState();
 }
 
 class _MyWidgetState extends State<EffectsStarter>
     with AutomaticKeepAliveClientMixin {
-  List<String> _effectTitle = [
+  final List<String> _effectTitle = [
     'Shine',
     'Walking Pixels',
     'Walking Pixels reverse',
@@ -34,7 +37,7 @@ class _MyWidgetState extends State<EffectsStarter>
     'Theater Chase Pixels',
     'Bouncing Pixels'
   ];
-  List<String> _effectDescription = [
+  final List<String> _effectDescription = [
     'Switching all Pixels on',
     'Pixels walking to one side',
     'Pixels walking to the other side',
@@ -55,7 +58,7 @@ class _MyWidgetState extends State<EffectsStarter>
     'Maybe Pixels visited a Theater',
     'And they bounce to center and back'
   ];
-  List<IconData> _effectIcon = [
+  final List<IconData> _effectIcon = [
     Icons.flare,
     Icons.directions_walk,
     Icons.undo,
@@ -118,9 +121,9 @@ class _MyWidgetState extends State<EffectsStarter>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('PixLeZ - Effects'),
+        title: const Text('PixLeZ - Effects'),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
@@ -129,9 +132,9 @@ class _MyWidgetState extends State<EffectsStarter>
           ),
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: _myListView(),
-      bottomNavigationBar: CustomBottomNavigator(),
+      bottomNavigationBar: const CustomBottomNavigator(),
     );
   }
 
@@ -144,7 +147,7 @@ class _MyWidgetState extends State<EffectsStarter>
         final itemIcon = _effectIcon[index];
 
         return Card(
-          margin: EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(10.0),
           shape: ContinuousRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
@@ -169,7 +172,7 @@ class _MyWidgetState extends State<EffectsStarter>
                     .setEffect(index);
                 Provider.of<StateNotifier>(context, listen: false).setMode(-1);
                 // String eff = '/select/effect/' + _effectMap[index].toString();
-                String eff = '/select/effect/' + index.toString();
+                String eff = '/select/effect/$index';
                 sendRequest(eff);
               });
             },

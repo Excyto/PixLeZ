@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:PixLeZ/data/state_notifier.dart';
-import 'package:PixLeZ/data/color_theme.dart';
+import 'package:pixlez/data/state_notifier.dart';
+import 'package:pixlez/data/color_theme.dart';
 
-import 'package:PixLeZ/app_theme/bottom_navigator.dart';
-import 'package:PixLeZ/app_theme/app_drawer.dart';
+import 'package:pixlez/app_theme/bottom_navigator.dart';
+import 'package:pixlez/app_theme/app_drawer.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -17,7 +17,7 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => StateNotifier(),
-      child: MaterialApp(
+      child: const MaterialApp(
         home: HomePage(),
       ),
     ),
@@ -25,6 +25,9 @@ void main() async {
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
   _HomePageState createState() => _HomePageState();
 }
 
@@ -35,9 +38,10 @@ class _HomePageState extends State<HomePage> {
       title: 'PixLeZ',
       theme: ThemeData(),
       darkTheme: ThemeData.dark().copyWith(
-        bottomAppBarColor: Colors.orangeAccent,
         indicatorColor: Colors.orangeAccent,
-        scaffoldBackgroundColor: Colors.grey[700], colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.orangeAccent),
+        bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.orange
+        ),
       ),
       home: Scaffold(
         // https://stackoverflow.com/questions/46551268/when-the-keyboard-appears-the-flutter-widgets-resize-how-to-prevent-this
@@ -46,17 +50,15 @@ class _HomePageState extends State<HomePage> {
         // resizeToAvoidBottomPadding: false,
         resizeToAvoidBottomInset: false,
 
-        drawer: AppDrawer(),
+        drawer: const AppDrawer(),
         body: Container(
           // margin: EdgeInsets.all(10.0),
           // padding: EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            color: Colors.grey,
-          ),
-          child: AppDrawer(),
-          alignment: Alignment(-1.0, 0.0),
+
+          alignment: const Alignment(-1.0, 0.0),
+          child: const AppDrawer(),
         ),
-        bottomNavigationBar: CustomBottomNavigator(),
+        bottomNavigationBar: const CustomBottomNavigator(),
       ),
     );
   }

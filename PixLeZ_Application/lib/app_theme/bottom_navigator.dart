@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:PixLeZ/data/state_notifier.dart';
+import 'package:pixlez/data/state_notifier.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
+  const CustomBottomNavigator({super.key});
+
+  @override
   _CustomBottomNavigator createState() => _CustomBottomNavigator();
 }
 
@@ -11,11 +14,11 @@ class _CustomBottomNavigator extends State<CustomBottomNavigator> {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      shape: CircularNotchedRectangle(),
+      shape: const CircularNotchedRectangle(),
       notchMargin: 4.0,
       child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: new Row(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -28,7 +31,7 @@ class _CustomBottomNavigator extends State<CustomBottomNavigator> {
             Row(
               children: [
                 Consumer<StateNotifier>(
-                  builder: (context, stateN, child) => Tooltip(
+                  builder: (context, stateN, child) => const Tooltip(
                     message: 'Debug off',
                     child: Icon(
                       // code - bug_report

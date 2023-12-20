@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-// import 'package:collection/collection.dart';
 
 import 'dart:convert';
 
-import 'package:PixLeZ/data/state_notifier.dart';
+import 'package:pixlez/data/state_notifier.dart';
 
-import 'package:PixLeZ/app_theme/bottom_navigator.dart';
-import 'package:PixLeZ/app_theme/app_drawer.dart';
+import 'package:pixlez/app_theme/bottom_navigator.dart';
+import 'package:pixlez/app_theme/app_drawer.dart';
 
-import 'package:PixLeZ/data/color_theme.dart';
+import 'package:pixlez/data/color_theme.dart';
 
 // Main Widget
 class ColorTheme extends StatefulWidget {
+  const ColorTheme({super.key});
+
+  @override
   _MyWidgetState createState() => _MyWidgetState();
 }
 
@@ -27,21 +29,20 @@ class _MyWidgetState extends State<ColorTheme>
   // https://medium.com/@adp4infotech4/flutter-building-a-reorderable-listview-735013719cf3
   // CheatSheet: https://github.com/TakeoffAndroid/flutter-examples
 
-  int _maxPixel;
+  int _maxPixel = 1;
 
   //_____________
   // Methods
   //________
   // Picker Dialog
-  void _showPickerDialog(int _index) async {
-    ColThemeEntry tmp;
-    if (_index == -1) {
-      tmp = null;
-    } else {
-      tmp = Provider.of<StateNotifier>(context, listen: false)
-          .activConfig
-          .entries[_index];
+  void _showPickerDialog(int index) async {
+    if (index == -1) {
+      return;
     }
+
+    var activeConfig = Provider.of<StateNotifier>(context, listen: false).activeConfig;
+    var tmp = activeConfig!.entries[index];
+
     final colThemeEntry = await showDialog<ColThemeEntry>(
       context: context,
       builder: (context) => PickerDialog(entry: tmp),
@@ -49,33 +50,33 @@ class _MyWidgetState extends State<ColorTheme>
 
     if (colThemeEntry != null) {
       setState(() {
-        if (_index == -1) {
+        if (index == -1) {
           for (var item in Provider.of<StateNotifier>(context, listen: false)
-              .activConfig
+              .activeConfig!
               .entries) {
             if (item.pos == colThemeEntry.pos) {
               return;
             }
           }
           Provider.of<StateNotifier>(context, listen: false)
-              .activConfig
+              .activeConfig!
               .entries
               .add(colThemeEntry);
           Provider.of<StateNotifier>(context, listen: false)
-              .activConfig
+              .activeConfig!
               .entries
               .sort((a, b) => a.pos.compareTo(b.pos));
         } else {
           Provider.of<StateNotifier>(context, listen: false)
-              .activConfig
+              .activeConfig!
               .entries
-              .removeAt(_index);
+              .removeAt(index);
           Provider.of<StateNotifier>(context, listen: false)
-              .activConfig
+              .activeConfig!
               .entries
               .add(colThemeEntry);
           Provider.of<StateNotifier>(context, listen: false)
-              .activConfig
+              .activeConfig!
               .entries
               .sort((a, b) => a.pos.compareTo(b.pos));
         }
@@ -88,7 +89,7 @@ class _MyWidgetState extends State<ColorTheme>
   void _showSaveDialog() async {
     await showDialog<ColThemeConfiguration>(
       context: context,
-      builder: (context) => SaverDialog(),
+      builder: (context) => const SaverDialog(),
     );
   }
 
@@ -96,7 +97,7 @@ class _MyWidgetState extends State<ColorTheme>
   void _showLoadDialog() async {
     await showDialog(
       context: context,
-      builder: (context) => LoaderDialog(),
+      builder: (context) => const LoaderDialog(),
     );
     // print(rec);
     // print(rec.select);
@@ -117,13 +118,13 @@ class _MyWidgetState extends State<ColorTheme>
     String bl = b.toRadixString(16);
 
     if (re.length == 1) {
-      re = '0' + re;
+      re = '0$re';
     }
     if (gr.length == 1) {
-      gr = '0' + gr;
+      gr = '0$gr';
     }
     if (bl.length == 1) {
-      bl = '0' + bl;
+      bl = '0$bl';
     }
     String ges = re + gr + bl;
     ges = ges.toUpperCase();
@@ -132,8 +133,8 @@ class _MyWidgetState extends State<ColorTheme>
 
   // clear Lists
   void _clearActuallConfig() {
-    Provider.of<StateNotifier>(context, listen: false).setActivConfig(
-        new ColThemeConfiguration([], [],
+    Provider.of<StateNotifier>(context, listen: false).setActiveConfig(
+        ColThemeConfiguration([], [],
             List.filled(_maxPixel, "0x000000"), ''));
   }
 
@@ -144,8 +145,8 @@ class _MyWidgetState extends State<ColorTheme>
     ColThemeEntry tmpNext;
     int range = 0;
     double steps = 0;
-    List<String> _pixelListTmp = List.filled(_maxPixel, "0x000000");
-    List<Color> _colListTmp = [];
+    List<String> pixelListTmp = List.filled(_maxPixel, "0x000000");
+    List<Color> colListTmp = [];
     // action 1 = pixel flow
     // action 2 = pixel static
     // action 3 = pixel static floating
@@ -153,37 +154,37 @@ class _MyWidgetState extends State<ColorTheme>
     for (int i = 0;
         i <
             Provider.of<StateNotifier>(context, listen: false)
-                .activConfig
+                .activeConfig!
                 .entries
                 .length;
         i++) {
       if (i ==
           Provider.of<StateNotifier>(context, listen: false)
-                  .activConfig
+                  .activeConfig!
                   .entries
                   .length -
               1) {
         tmp = Provider.of<StateNotifier>(context, listen: false)
-            .activConfig
+            .activeConfig!
             .entries[i];
-        tmpNext = new ColThemeEntry(0, 0, 0, _maxPixel, -1);
+        tmpNext = ColThemeEntry(0, 0, 0, _maxPixel, -1);
       } else {
         tmp = Provider.of<StateNotifier>(context, listen: false)
-            .activConfig
+            .activeConfig!
             .entries[i];
         tmpNext = Provider.of<StateNotifier>(context, listen: false)
-            .activConfig
+            .activeConfig!
             .entries[i + 1];
       }
       actionState = tmp.action;
       if (actionState == 2) {
-        _pixelListTmp[tmp.pos] = _rgbToHex(tmp.colR, tmp.colG, tmp.colB);
+        pixelListTmp[tmp.pos] = _rgbToHex(tmp.colR, tmp.colG, tmp.colB);
         continue;
       }
       range = tmpNext.pos - tmp.pos;
       if (actionState == 3) {
         for (int j = 0; j < range; j++) {
-          _pixelListTmp[tmp.pos + j] = _rgbToHex(tmp.colR, tmp.colG, tmp.colB);
+          pixelListTmp[tmp.pos + j] = _rgbToHex(tmp.colR, tmp.colG, tmp.colB);
         }
         continue;
       }
@@ -192,23 +193,23 @@ class _MyWidgetState extends State<ColorTheme>
       steps = 1.0 / double.parse(range.toString());
       if (actionState == 1) {
         for (int j = 0; j < range; j++) {
-          Color lerpCol = Color.lerp(fromCol, toCol, steps * j);
-          _pixelListTmp[tmp.pos + j] =
+          Color lerpCol = Color.lerp(fromCol, toCol, steps * j)!;
+          pixelListTmp[tmp.pos + j] =
               _rgbToHex(lerpCol.red, lerpCol.green, lerpCol.blue);
         }
       }
     }
 
-    for (int i = 0; i < _pixelListTmp.length; i++) {
-      if (_pixelListTmp[i] == null) _pixelListTmp[i] = '000000';
-      _colListTmp.add(Color(int.parse("0xff" + _pixelListTmp[i])));
+    for (int i = 0; i < pixelListTmp.length; i++) {
+      if (pixelListTmp[i] == null) pixelListTmp[i] = '000000';
+      colListTmp.add(Color(int.parse("0xff${pixelListTmp[i]}")));
     }
 
     setState(() {
-      Provider.of<StateNotifier>(context, listen: false).activConfig.preview =
-          _colListTmp;
-      Provider.of<StateNotifier>(context, listen: false).activConfig.send =
-          _pixelListTmp;
+      Provider.of<StateNotifier>(context, listen: false).activeConfig!.preview =
+          colListTmp;
+      Provider.of<StateNotifier>(context, listen: false).activeConfig!.send =
+          pixelListTmp;
     });
 
     // print(_pixelList);
@@ -227,7 +228,7 @@ class _MyWidgetState extends State<ColorTheme>
         Provider.of<StateNotifier>(context, listen: false).ip.toString() + res;
 
     String jsonString = jsonEncode(
-        Provider.of<StateNotifier>(context, listen: false).activConfig.send);
+        Provider.of<StateNotifier>(context, listen: false).activeConfig!.send);
 
     print(jsonString);
 
@@ -250,10 +251,10 @@ class _MyWidgetState extends State<ColorTheme>
     super.initState();
     _maxPixel = Provider.of<StateNotifier>(context, listen: false).maxPixel;
 
-    if (Provider.of<StateNotifier>(context, listen: false).activConfig ==
+    if (Provider.of<StateNotifier>(context, listen: false).activeConfig ==
         null) {
-      Provider.of<StateNotifier>(context, listen: false).setActivConfig(
-          new ColThemeConfiguration([],
+      Provider.of<StateNotifier>(context, listen: false).setActiveConfig(
+          ColThemeConfiguration([],
               [], List.filled(_maxPixel, "0x000000"), ''));
     }
   }
@@ -265,9 +266,9 @@ class _MyWidgetState extends State<ColorTheme>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('PixLeZ - Custom Themes'),
+        title: const Text('PixLeZ - Custom Themes'),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
@@ -276,7 +277,7 @@ class _MyWidgetState extends State<ColorTheme>
           ),
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -285,13 +286,13 @@ class _MyWidgetState extends State<ColorTheme>
             flex: 2,
             child: ButtonBar(
               children: <Widget>[
-                new IconButton(
-                  icon: Icon(Icons.add),
+                IconButton(
+                  icon: const Icon(Icons.add),
                   tooltip: 'Add entry',
                   onPressed: () => _showPickerDialog(-1),
                 ),
-                new IconButton(
-                  icon: Icon(Icons.clear_all),
+                IconButton(
+                  icon: const Icon(Icons.clear_all),
                   tooltip: 'New Config',
                   onPressed: () {
                     setState(() {
@@ -299,15 +300,15 @@ class _MyWidgetState extends State<ColorTheme>
                     });
                   },
                 ),
-                new IconButton(
-                  icon: Icon(Icons.bookmark_border),
+                IconButton(
+                  icon: const Icon(Icons.bookmark_border),
                   tooltip: 'Load configuration',
                   onPressed: () {
                     _showLoadDialog();
                   },
                 ),
-                new IconButton(
-                  icon: Icon(Icons.attach_file),
+                IconButton(
+                  icon: const Icon(Icons.attach_file),
                   tooltip: 'Save configuration',
                   onPressed: () {
                     _updateColorPreview();
@@ -315,8 +316,8 @@ class _MyWidgetState extends State<ColorTheme>
                     // _clearActuallConfig();
                   },
                 ),
-                new IconButton(
-                  icon: Icon(Icons.publish),
+                IconButton(
+                  icon: const Icon(Icons.publish),
                   tooltip: 'Send configuration',
                   onPressed: () {
                     // _updateColorPreview();
@@ -330,10 +331,10 @@ class _MyWidgetState extends State<ColorTheme>
             flex: 12,
             child: Consumer<StateNotifier>(
               builder: (context, stateN, child) => ListView.builder(
-                itemCount: stateN.activConfig.entries.length,
+                itemCount: stateN.activeConfig!.entries.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    margin: EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.all(10.0),
                     // vertical_align_center
                     // keyboard_arrow_down
                     // last_page
@@ -341,25 +342,17 @@ class _MyWidgetState extends State<ColorTheme>
                     // trending_down
                     // trip_origin
                     child: ListTile(
-                      leading: stateN.activConfig.entries[index].action == 2
-                          ? Icon(Icons.arrow_forward_ios)
-                          : (stateN.activConfig.entries[index].action == 1
-                              ? Icon(Icons.more_vert)
-                              : Icon(Icons.details)),
-                      title: stateN.activConfig.entries[index].action == 2
-                          ? Text('Static Pixel at pos ' +
-                              stateN.activConfig.entries[index].pos.toString())
-                          : (stateN.activConfig.entries[index].action == 1
-                              ? Text('Flow Pixels from pos ' +
-                                  stateN.activConfig.entries[index].pos
-                                      .toString())
-                              : Text('Static Floating Pixels from pos ' +
-                                  stateN.activConfig.entries[index].pos
-                                      .toString())),
-                      subtitle: Text("Action: " +
-                          stateN.activConfig.entries[index].action.toString() +
-                          " Position: " +
-                          stateN.activConfig.entries[index].pos.toString()),
+                      leading: stateN.activeConfig!.entries[index].action == 2
+                          ? const Icon(Icons.arrow_forward_ios)
+                          : (stateN.activeConfig!.entries[index].action == 1
+                              ? const Icon(Icons.more_vert)
+                              : const Icon(Icons.details)),
+                      title: stateN.activeConfig!.entries[index].action == 2
+                          ? Text('Static Pixel at pos ${stateN.activeConfig!.entries[index].pos}')
+                          : (stateN.activeConfig!.entries[index].action == 1
+                              ? Text('Flow Pixels from pos ${stateN.activeConfig!.entries[index].pos}')
+                              : Text('Static Floating Pixels from pos ${stateN.activeConfig!.entries[index].pos}')),
+                      subtitle: Text("Action: ${stateN.activeConfig!.entries[index].action} Position: ${stateN.activeConfig!.entries[index].pos}"),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -367,17 +360,17 @@ class _MyWidgetState extends State<ColorTheme>
                           Icon(
                             Icons.pets,
                             color: Color.fromRGBO(
-                                stateN.activConfig.entries[index].colR,
-                                stateN.activConfig.entries[index].colG,
-                                stateN.activConfig.entries[index].colB,
+                                stateN.activeConfig!.entries[index].colR,
+                                stateN.activeConfig!.entries[index].colG,
+                                stateN.activeConfig!.entries[index].colB,
                                 0.8),
                           ),
                           IconButton(
-                            icon: Icon(Icons.clear),
+                            icon: const Icon(Icons.clear),
                             tooltip: 'Delete entry',
                             onPressed: () {
                               setState(() {
-                                stateN.activConfig.entries.removeAt(index);
+                                stateN.activeConfig!.entries.removeAt(index);
                                 _updateColorPreview();
                               });
                             },
@@ -401,12 +394,12 @@ class _MyWidgetState extends State<ColorTheme>
             child: SizedBox(
               child: Consumer<StateNotifier>(
                 builder: (context, stateN, child) => Container(
-                  margin: EdgeInsets.all(10.0),
-                  padding: EdgeInsets.all(10.0),
+                  margin: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       // end: Alignment(0.4, 0.0),
-                      colors: stateN.activConfig.preview,
+                      colors: stateN.activeConfig!.preview,
                       // colors: [Colors.white, Colors.blue],
                     ),
                   ),
@@ -416,7 +409,7 @@ class _MyWidgetState extends State<ColorTheme>
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigator(),
+      bottomNavigationBar: const CustomBottomNavigator(),
     );
   }
 
@@ -429,20 +422,20 @@ class _MyWidgetState extends State<ColorTheme>
 class PickerDialog extends StatefulWidget {
   final ColThemeEntry entry;
 
-  const PickerDialog({Key key, this.entry}) : super(key: key);
+  const PickerDialog({super.key, required this.entry});
 
   @override
   _PickerDialogState createState() => _PickerDialogState();
 }
 
 class _PickerDialogState extends State<PickerDialog> {
-  ColThemeEntry _tmp;
-  int _valR;
-  int _valG;
-  int _valB;
-  int _radioSelection;
+  late ColThemeEntry _tmp;
+  late int _valR;
+  late int _valG;
+  late int _valB;
+  late int _radioSelection;
 
-  var _startPixelController = new TextEditingController();
+  final _startPixelController = TextEditingController();
 
   @override
   void initState() {
@@ -465,7 +458,7 @@ class _PickerDialogState extends State<PickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Pixel Configuration'),
+      title: const Text('Pixel Configuration'),
       content: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 400.0),
         child: Column(
@@ -478,7 +471,7 @@ class _PickerDialogState extends State<PickerDialog> {
               child: TextField(
                 keyboardType: TextInputType.number,
                 controller: _startPixelController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.fiber_smart_record),
                   labelText: 'Position of the Pixel',
                   border: OutlineInputBorder(),
@@ -552,7 +545,7 @@ class _PickerDialogState extends State<PickerDialog> {
               flex: 2,
               child: SizedBox(
                 child: Container(
-                  margin: EdgeInsets.all(10.0),
+                  margin: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(_valR, _valG, _valB, 0.8),
                   ),
@@ -562,13 +555,8 @@ class _PickerDialogState extends State<PickerDialog> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text('R ' +
-                    _valR.toString() +
-                    ', G ' +
-                    _valG.toString() +
-                    ', B ' +
-                    _valB.toString()),
+                padding: const EdgeInsets.all(10.0),
+                child: Text('R $_valR, G $_valG, B $_valB'),
               ),
             ),
             Expanded(
@@ -578,9 +566,9 @@ class _PickerDialogState extends State<PickerDialog> {
                 leading: Radio(
                   value: 1,
                   groupValue: _radioSelection,
-                  onChanged: (int value) {
+                  onChanged: (int? value) {
                     setState(() {
-                      _radioSelection = value;
+                      _radioSelection = value!;
                     });
                   },
                 ),
@@ -593,9 +581,9 @@ class _PickerDialogState extends State<PickerDialog> {
                 leading: Radio(
                   value: 2,
                   groupValue: _radioSelection,
-                  onChanged: (int value) {
+                  onChanged: (int? value) {
                     setState(() {
-                      _radioSelection = value;
+                      _radioSelection = value!;
                     });
                   },
                 ),
@@ -608,15 +596,15 @@ class _PickerDialogState extends State<PickerDialog> {
                 leading: Radio(
                   value: 3,
                   groupValue: _radioSelection,
-                  onChanged: (int value) {
+                  onChanged: (int? value) {
                     setState(() {
-                      _radioSelection = value;
+                      _radioSelection = value!;
                     });
                   },
                 ),
               ),
             ),
-            Spacer(
+            const Spacer(
               flex: 1,
             ),
           ],
@@ -634,7 +622,7 @@ class _PickerDialogState extends State<PickerDialog> {
                   tmp > -1) {
                 Navigator.pop(
                     context,
-                    new ColThemeEntry(
+                    ColThemeEntry(
                         _valR, _valG, _valB, tmp, _radioSelection));
               } else {
                 _startPixelController.text = '-1';
@@ -643,13 +631,13 @@ class _PickerDialogState extends State<PickerDialog> {
               _startPixelController.text = '-1';
             }
           },
-          child: Text('Add'),
+          child: const Text('Add'),
         ),
         TextButton(
           onPressed: () {
             Navigator.pop(context, null);
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         )
       ],
     );
@@ -657,14 +645,14 @@ class _PickerDialogState extends State<PickerDialog> {
 }
 
 class SaverDialog extends StatefulWidget {
-  const SaverDialog({Key key}) : super(key: key);
+  const SaverDialog({super.key});
 
   @override
   _SaverDialogState createState() => _SaverDialogState();
 }
 
 class _SaverDialogState extends State<SaverDialog> {
-  var _nameController = new TextEditingController();
+  final _nameController = TextEditingController();
 
   @override
   void initState() {
@@ -674,12 +662,12 @@ class _SaverDialogState extends State<SaverDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Save Pixel Configuration'),
+      title: const Text('Save Pixel Configuration'),
       content: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 400.0),
         child: TextField(
           controller: _nameController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             prefixIcon: Icon(Icons.storage),
             labelText: 'Name of the Configuration',
             border: OutlineInputBorder(),
@@ -691,19 +679,19 @@ class _SaverDialogState extends State<SaverDialog> {
           onPressed: () {
             setState(() {
               if (_nameController.text.isEmpty) {
-                final snackBar = SnackBar(content: Text('Name is Empty'));
+                const snackBar = SnackBar(content: Text('Name is Empty'));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 _nameController.clear();
               } else {
                 Provider.of<StateNotifier>(context, listen: false)
-                    .activConfig
+                    .activeConfig!
                     .name = _nameController.text;
                 Provider.of<StateNotifier>(context, listen: false).addConfig(
                     Provider.of<StateNotifier>(context, listen: false)
-                        .activConfig);
+                        .activeConfig!);
 
                 Provider.of<StateNotifier>(context, listen: false)
-                    .setActivConfig(new ColThemeConfiguration(
+                    .setActiveConfig(ColThemeConfiguration(
                     [],
                     [],
                         List.filled(
@@ -715,13 +703,13 @@ class _SaverDialogState extends State<SaverDialog> {
               }
             });
           },
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
         TextButton(
           onPressed: () {
             Navigator.pop(context, null);
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         )
       ],
     );
@@ -729,7 +717,7 @@ class _SaverDialogState extends State<SaverDialog> {
 }
 
 class LoaderDialog extends StatefulWidget {
-  const LoaderDialog({Key key}) : super(key: key);
+  const LoaderDialog({super.key});
 
   @override
   _LoaderDialogState createState() => _LoaderDialogState();
@@ -746,8 +734,8 @@ class _LoaderDialogState extends State<LoaderDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Load Pixel Configuration'),
-      content: Container(
+      title: const Text('Load Pixel Configuration'),
+      content: SizedBox(
         height: MediaQuery.of(context).size.height -
             (MediaQuery.of(context).size.height / 4),
         width: MediaQuery.of(context).size.width -
@@ -757,16 +745,16 @@ class _LoaderDialogState extends State<LoaderDialog> {
             itemCount: stateN.getConfigLength(),
             itemBuilder: (context, index) {
               return Card(
-                margin: EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(10.0),
                 child: ListTile(
                   title: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(stateN.getConfigList(index).name),
                   ),
                   subtitle: SizedBox(
                     child: Container(
-                      margin: EdgeInsets.all(10.0),
-                      padding: EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           // end: Alignment(0.4, 0.0),
@@ -785,7 +773,7 @@ class _LoaderDialogState extends State<LoaderDialog> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.clear),
+                        icon: const Icon(Icons.clear),
                         tooltip: 'Delete entry',
                         onPressed: () {
                           setState(() {
@@ -832,9 +820,9 @@ class _LoaderDialogState extends State<LoaderDialog> {
                         Provider.of<StateNotifier>(context, listen: false)
                             .selectedConfig);
 
-            List entries = [];
-            List colors = [];
-            List send = [];
+            List<ColThemeEntry> entries = [];
+            List<Color> colors = [];
+            List<String> send = [];
 
             for (var entry in conf.entries) {
               entries.add(ColThemeEntry(
@@ -844,15 +832,15 @@ class _LoaderDialogState extends State<LoaderDialog> {
               colors.add(Color(col.value));
             }
             for (var str in conf.send) {
-              send.add('' + str.toString());
+              send.add(str);
             }
 
-            Provider.of<StateNotifier>(context, listen: false).setActivConfig(
+            Provider.of<StateNotifier>(context, listen: false).setActiveConfig(
                 ColThemeConfiguration(entries, colors, send, conf.name));
 
             Navigator.pop(context);
           },
-          child: Text('Done'),
+          child: const Text('Done'),
         ),
       ],
     );

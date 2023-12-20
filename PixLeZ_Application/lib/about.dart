@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:PixLeZ/app_theme/bottom_navigator.dart';
-import 'package:PixLeZ/app_theme/app_drawer.dart';
+import 'package:pixlez/app_theme/bottom_navigator.dart';
+import 'package:pixlez/app_theme/app_drawer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutStarter extends StatefulWidget {
+  const AboutStarter({super.key});
+
+  @override
   _AboutStarterState createState() => _AboutStarterState();
 }
 
@@ -19,9 +21,9 @@ class _AboutStarterState extends State<AboutStarter>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('PixLeZ - About'),
+        title: const Text('PixLeZ - About'),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
@@ -30,25 +32,25 @@ class _AboutStarterState extends State<AboutStarter>
           ),
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: FutureBuilder(
         future: rootBundle.loadString("lib/assets/about_page.md"),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
             return Markdown(
-              data: snapshot.data,
-              onTapLink: (text, href, title) => launch(text),
+              data: snapshot.data.toString(),
+              onTapLink: (text, href, title) => launchUrlString(text),
               styleSheet: MarkdownStyleSheet(
                   // h1: TextStyle(color: Colors.orange, fontSize: 40),
                   ),
             );
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         },
       ),
-      bottomNavigationBar: CustomBottomNavigator(),
+      bottomNavigationBar: const CustomBottomNavigator(),
     );
   }
 
