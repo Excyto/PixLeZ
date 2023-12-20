@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:PixLeZ/settings.dart';
-import 'package:PixLeZ/effects.dart';
-import 'package:PixLeZ/modes.dart';
-import 'package:PixLeZ/configuration.dart';
-import 'package:PixLeZ/color_theme_config.dart';
-import 'package:PixLeZ/about.dart';
-import 'package:PixLeZ/help.dart';
-import 'package:PixLeZ/page_license.dart';
+import 'package:pixlez/settings.dart';
+import 'package:pixlez/effects.dart';
+import 'package:pixlez/modes.dart';
+import 'package:pixlez/configuration.dart';
+import 'package:pixlez/color_theme_config.dart';
+import 'package:pixlez/about.dart';
+import 'package:pixlez/help.dart';
+import 'package:pixlez/page_license.dart';
 
 class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -19,7 +21,7 @@ class AppDrawer extends StatelessWidget {
           DrawerHeader(
             margin: EdgeInsets.zero,
             padding: EdgeInsets.zero,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,
@@ -28,7 +30,7 @@ class AppDrawer extends StatelessWidget {
             ),
             child: Stack(
               children: <Widget>[
-                Positioned(
+                const Positioned(
                   bottom: 12.0,
                   left: 55.0,
                   child: Text(
@@ -47,9 +49,9 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.looks),
                 Padding(
@@ -60,11 +62,11 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => ConfigurationStarter())),
+                    builder: (BuildContext context) => const ConfigurationStarter())),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.whatshot),
                 Padding(
@@ -75,11 +77,11 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => ColorTheme())),
+                    builder: (BuildContext context) => const ColorTheme())),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.landscape),
                 Padding(
@@ -90,10 +92,10 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => EffectsStarter())),
+                    builder: (BuildContext context) => const EffectsStarter())),
           ),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.blur_on),
                 Padding(
@@ -104,11 +106,11 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => ModesStarter())),
+                    builder: (BuildContext context) => const ModesStarter())),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.settings),
                 Padding(
@@ -119,11 +121,11 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => SettingsStarter())),
+                    builder: (BuildContext context) => const SettingsStarter())),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.help_outline),
                 Padding(
@@ -134,10 +136,10 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => HelpStarter())),
+                    builder: (BuildContext context) => const HelpStarter())),
           ),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.info_outline),
                 Padding(
@@ -148,10 +150,10 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => AboutStarter())),
+                    builder: (BuildContext context) => const AboutStarter())),
           ),
           ListTile(
-            title: Row(
+            title: const Row(
               children: <Widget>[
                 Icon(Icons.receipt_long_rounded),
                 Padding(
@@ -162,7 +164,7 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => LicenseStarter())),
+                    builder: (BuildContext context) => const LicenseStarter())),
           ),
         ],
       ),

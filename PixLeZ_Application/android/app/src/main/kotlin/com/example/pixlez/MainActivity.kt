@@ -1,4 +1,4 @@
-package com.example.pixlez_application
+package com.example.pixlez
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import 'package:PixLeZ/data/state_notifier.dart';
+import 'package:pixlez/data/state_notifier.dart';
 
-import 'package:PixLeZ/app_theme/bottom_navigator.dart';
-import 'package:PixLeZ/app_theme/app_drawer.dart';
+import 'package:pixlez/app_theme/bottom_navigator.dart';
+import 'package:pixlez/app_theme/app_drawer.dart';
 
 class ConfigurationStarter extends StatefulWidget {
+  const ConfigurationStarter({super.key});
+
+  @override
   _MyWidgetState createState() => _MyWidgetState();
 }
 
@@ -21,9 +24,9 @@ class _MyWidgetState extends State<ConfigurationStarter>
   double _valB_src = 0;
   double _valAlpha = 100;
 
-  var _numController = TextEditingController();
-  var _timeController = TextEditingController();
-  var _timerController = TextEditingController();
+  final _numController = TextEditingController();
+  final _timeController = TextEditingController();
+  final _timerController = TextEditingController();
 
   sendRequest(String res) async {
     String ipAd = Provider.of<StateNotifier>(context, listen: false).ip;
@@ -95,9 +98,9 @@ class _MyWidgetState extends State<ConfigurationStarter>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('PixLeZ - Controller'),
+        title: const Text('PixLeZ - Controller'),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
@@ -106,7 +109,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
           ),
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -210,8 +213,8 @@ class _MyWidgetState extends State<ConfigurationStarter>
                   width: 150,
                   height: 150,
                   child: Container(
-                    margin: EdgeInsets.all(10.0),
-                    padding: EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(
                           // O anpassen
@@ -224,25 +227,20 @@ class _MyWidgetState extends State<ConfigurationStarter>
                 ),
                 Expanded(
                   flex: 1,
-                  child: Text('R ' +
-                      _valR.round().toString() +
-                      ', G ' +
-                      _valG.round().toString() +
-                      ', B ' +
-                      _valB.round().toString()),
+                  child: Text('R ${_valR.round()}, G ${_valG.round()}, B ${_valB.round()}'),
                   //state.address.ip),
                 ),
-                Spacer(
+                const Spacer(
                   flex: 1,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: ButtonBar(
                       children: <Widget>[
                         ElevatedButton(
-                          child: Text('Set Color'),
+                          child: const Text('Set Color'),
                           onPressed: () {
                             int r = _valR.round();
                             int g = _valG.round();
@@ -253,17 +251,17 @@ class _MyWidgetState extends State<ConfigurationStarter>
                             String bl = b.toRadixString(16);
 
                             if (re.length == 1) {
-                              re = '0' + re;
+                              re = '0$re';
                             }
                             if (gr.length == 1) {
-                              gr = '0' + gr;
+                              gr = '0$gr';
                             }
                             if (bl.length == 1) {
-                              bl = '0' + bl;
+                              bl = '0$bl';
                             }
                             String ges = re + gr + bl;
                             ges = ges.toUpperCase();
-                            String req = '/set/color/' + ges;
+                            String req = '/set/color/$ges';
                             sendRequest(req);
                           },
                         ),
@@ -277,11 +275,11 @@ class _MyWidgetState extends State<ConfigurationStarter>
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: TextField(
                 keyboardType: TextInputType.number,
                 controller: _numController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.polymer, color: Colors.lightBlueAccent,),
                   labelText: 'Number in x',
                   border: OutlineInputBorder(),
@@ -293,12 +291,12 @@ class _MyWidgetState extends State<ConfigurationStarter>
                     var n = int.parse(text);
                     setState(() {
                       String req =
-                          '/set/number/' + int.parse(n.toString()).toString();
+                          '/set/number/${int.parse(n.toString())}';
                       sendRequest(req);
                     });
                   } on FormatException {
                     _numController.text = '-1';
-                    final snackBar = SnackBar(
+                    const snackBar = SnackBar(
                         content: Text('Please enter a decimal number.'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -309,11 +307,11 @@ class _MyWidgetState extends State<ConfigurationStarter>
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: TextField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 controller: _timeController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.timelapse, color: Colors.lightBlueAccent,),
                   labelText: 'Time in sec',
                   border: OutlineInputBorder(),
@@ -324,16 +322,16 @@ class _MyWidgetState extends State<ConfigurationStarter>
                   try {
                     double d = double.parse(text);
                     if (!d.toString().contains('.')) {
-                      text = text + '.0';
+                      text = '$text.0';
                     }
                     setState(() {
-                      String req = '/set/time/' + text;
+                      String req = '/set/time/$text';
                       sendRequest(req);
                     });
                   } on FormatException {
                     setState(() {
                       _timeController.text = '-1';
-                      final snackBar = SnackBar(
+                      const snackBar = SnackBar(
                           content: Text('Please enter a decimal number.'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -345,11 +343,11 @@ class _MyWidgetState extends State<ConfigurationStarter>
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: TextField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 controller: _timerController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.timer, color: Colors.lightBlueAccent,),
                   labelText: 'Timer in sec',
                   border: OutlineInputBorder(),
@@ -360,16 +358,16 @@ class _MyWidgetState extends State<ConfigurationStarter>
                   try {
                     double d = double.parse(text);
                     if (!d.toString().contains('.')) {
-                      text = text + '.0';
+                      text = '$text.0';
                     }
                     setState(() {
-                      String req = '/set/timer/' + text;
+                      String req = '/set/timer/$text';
                       sendRequest(req);
                     });
                   } on FormatException {
                     setState(() {
                       _timerController.text = '-1';
-                      final snackBar = SnackBar(
+                      const snackBar = SnackBar(
                           content: Text('Please enter a decimal number.'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
@@ -381,42 +379,38 @@ class _MyWidgetState extends State<ConfigurationStarter>
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: ButtonBar(
                 children: <Widget>[
-                  new ElevatedButton(
-                    child: Text('Update'),
+                  ElevatedButton(
+                    child: const Text('Update'),
                     onPressed: () {
                       sendRequest("/status");
                     },
                   ),
-                  new ElevatedButton(
-                    child: Text('Restart'),
+                  ElevatedButton(
+                    child: const Text('Restart'),
                     onPressed: () {
                       setState(
                         () {
-                          String req = '/select/mode/' +
-                              Provider.of<StateNotifier>(context, listen: false)
-                                  .mode
-                                  .toString();
+                          String req = '/select/mode/${Provider.of<StateNotifier>(context, listen: false)
+                                  .mode}';
                           sendRequest(req);
-                          req = '/select/effect/' +
-                              Provider.of<StateNotifier>(context, listen: false)
-                                  .effect
-                                  .toString();
+                          req = '/select/effect/${Provider.of<StateNotifier>(context, listen: false)
+                                  .effect}';
                           sendRequest(req);
                         },
                       );
                     },
                   ),
-                  new ElevatedButton(
-                    child: Text('Start'),
+                  ElevatedButton(
+                    child: const Text('Start'),
                     onPressed: () {
                       sendRequest("/start");
                     },
                   ),
-                  new ElevatedButton(
-                    child: Text('Stop'),
+                  ElevatedButton(
+                    child: const Text('Stop'),
                     onPressed: () {
                       sendRequest("/stop");
                     },
@@ -427,7 +421,7 @@ class _MyWidgetState extends State<ConfigurationStarter>
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigator(),
+      bottomNavigationBar: const CustomBottomNavigator(),
     );
   }
 

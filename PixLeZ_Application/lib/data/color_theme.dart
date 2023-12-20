@@ -10,13 +10,8 @@ class ColThemeEntry {
   int colB;
   int pos;
   int action;
-  ColThemeEntry(int colR, int colG, int colB, int pos, int action) {
-    this.colR = colR;
-    this.colG = colG;
-    this.colB = colB;
-    this.pos = pos;
-    this.action = action;
-  }
+
+  ColThemeEntry(this.colR, this.colG, this.colB, this.pos, this.action);
 }
 
 // Object Data for a configuration
@@ -26,15 +21,11 @@ class ColThemeConfiguration {
   List<String> send;
   String name;
   var id;
-  ColThemeConfiguration(List<ColThemeEntry> entries, List<Color> preview,
-      List<String> send, String name) {
-    this.entries = entries;
-    this.preview = preview;
+
+  ColThemeConfiguration(this.entries, this.preview, this.send, this.name) {
     preview.add(Colors.white);
     preview.add(Colors.white);
-    this.send = send;
-    this.name = name;
-    var uuid = Uuid();
+    var uuid = const Uuid();
     id = uuid.v4().toString();
   }
 }

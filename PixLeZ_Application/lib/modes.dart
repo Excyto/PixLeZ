@@ -2,30 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import 'package:PixLeZ/data/state_notifier.dart';
+import 'package:pixlez/data/state_notifier.dart';
 
-import 'package:PixLeZ/app_theme/bottom_navigator.dart';
-import 'package:PixLeZ/app_theme/app_drawer.dart';
+import 'package:pixlez/app_theme/bottom_navigator.dart';
+import 'package:pixlez/app_theme/app_drawer.dart';
 
 class ModesStarter extends StatefulWidget {
+  const ModesStarter({super.key});
+
+  @override
   _MyWidgetState createState() => _MyWidgetState();
 }
 
 class _MyWidgetState extends State<ModesStarter>
     with AutomaticKeepAliveClientMixin {
-  List<String> _modeTitle = [
+  final List<String> _modeTitle = [
     'Shine It',
     'Chill Mode',
     'Color Theme',
     'No Effect'
   ];
-  List<String> _modeDescription = [
+  final List<String> _modeDescription = [
     'Normal light Pixel mode',
     'Chillin with the Pixels',
     'Use your custom color Pixel theme',
     'Nope, not today'
   ];
-  List<IconData> _modeIcon = [
+  final List<IconData> _modeIcon = [
     Icons.local_florist,
     Icons.weekend,
     Icons.center_focus_strong,
@@ -50,9 +53,9 @@ class _MyWidgetState extends State<ModesStarter>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('PixLeZ - Modes'),
+        title: const Text('PixLeZ - Modes'),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
@@ -61,9 +64,9 @@ class _MyWidgetState extends State<ModesStarter>
           ),
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: _myListView(),
-      bottomNavigationBar: CustomBottomNavigator(),
+      bottomNavigationBar: const CustomBottomNavigator(),
     );
   }
 
@@ -76,7 +79,7 @@ class _MyWidgetState extends State<ModesStarter>
         final itemIcon = _modeIcon[index];
 
         return Card(
-          margin: EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(10.0),
           child: ListTile(
             leading: Icon(itemIcon, color: Colors.lightBlueAccent,),
             title: Text(itemTitle),
@@ -98,7 +101,7 @@ class _MyWidgetState extends State<ModesStarter>
                     .setMode(index);
                 Provider.of<StateNotifier>(context, listen: false)
                     .setEffect(-1);
-                String mo = '/select/mode/' + index.toString();
+                String mo = '/select/mode/$index';
                 sendRequest(mo);
               });
             },
